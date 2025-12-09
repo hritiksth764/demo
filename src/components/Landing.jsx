@@ -18,7 +18,7 @@ const Landing = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full h-[200vh] sm:h-full text-white relative font-regular tracking-tighter overflow-hidden"
+      className="w-full h-[200vh] sm:h-[240vh] text-white relative font-regular tracking-tighter overflow-hidden"
     >
       <div className="image h-full overflow-hidden">
         <motion.img
