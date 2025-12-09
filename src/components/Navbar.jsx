@@ -6,9 +6,16 @@ import logoImage from "../assets/REG web assets.svg";
 const Navbar = () => {
   return (
     <div className="w-full fixed z-[9999]">
-      <nav className="text-white sm:mx-[10rem] max-w-screen-2xl  sm:px-0 px-8 sm:py-5 py-5 flex items-center justify-between">
+      <nav
+        className="text-white flex items-center justify-between px-8 sm:px-[9rem] py-5"
+        style={{
+          background: "rgba(0, 0, 0, 0.01)",
+
+          backdropFilter: "blur(4px)",
+        }}
+      >
         <div className="inline-block">
-          <img src={logoImage} alt="Logo" className="sm:w-50 w-25 h-auto" />
+          <img src={logoImage} alt="Logo" className="sm:w-40 w-25 h-auto" />
         </div>
 
         <motion.span

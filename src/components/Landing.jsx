@@ -20,7 +20,7 @@ const Landing = () => {
       ref={containerRef}
       className="w-full h-[200vh] sm:h-[240vh] text-white relative font-regular tracking-tighter overflow-hidden"
     >
-      <div className="image h-full overflow-hidden">
+      <div className="image h-full overflow-hidden relative">
         <motion.img
           data-scroll
           data-scroll-speed="-1"
@@ -32,6 +32,13 @@ const Landing = () => {
           }}
           // style={{ scale: heroScale }}
           transition={{ type: "spring", stiffness: 80, damping: 20 }}
+        />
+        <div
+          className="absolute top-0 left-0 w-full h-[30%] pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, #010F1A 0%, rgba(1, 15, 26, 0.5) 50%, transparent 100%)",
+          }}
         />
       </div>
 
@@ -99,7 +106,11 @@ const Landing = () => {
         {/* <FaArrowDown className="text-[#ffffffc5] " /> */}
         <motion.p
           className="para2 mt-0 sm:w-1/2 sm:text-[1.2vw] sm:leading-7 "
-          style={{ y: subcopyY, fontFamily: "BonaNova" }}
+          style={{
+            y: subcopyY,
+            fontFamily: "BonaNova",
+            letterSpacing: "0.03em",
+          }}
         >
           In the heart of Bengaluru, in Koramangala, Regalium is a
           next-generation development that forms a seamless world of retail,
