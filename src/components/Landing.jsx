@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { FaArrowDown } from "react-icons/fa6";
 import { Power4 } from "gsap/all";
 import { motion, useScroll, useTransform } from "framer-motion"; // eslint-disable-line no-unused-vars
-import imagePNG from "../assets/image.png";
+import imagePNG from "../assets/image copy.png";
 
 const Landing = () => {
   const containerRef = useRef(null);
@@ -18,32 +18,38 @@ const Landing = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full h-[150vh] sm:h-[190vh]  text-white relative font-regular tracking-tighter overflow-hidden"
+      className="w-full h-[200vh] sm:h-[240vh]  text-white relative font-regular tracking-tighter overflow-hidden"
     >
       <div className="image h-full overflow-hidden">
         <motion.img
           data-scroll
           data-scroll-speed="-1"
-          className="h-full object-cover"
+          className="w-full h-full object-cover sm:object-cover sm:object-top"
           src={imagePNG}
           alt=""
+          style={{
+            objectPosition: "center top",
+          }}
           // style={{ scale: heroScale }}
           transition={{ type: "spring", stiffness: 80, damping: 20 }}
         />
       </div>
 
-      <div className="absolute top-0 h-full px-8 sm:px-[10rem]">
+      <div className="absolute top-0 h-full px-8 sm:px-[10rem] ">
         <motion.div
-          className="para mt-[25rem] sm:text-2xl sm:leading-7 text-left w-full ml-0"
+          className="para mt-[8rem] sm:mt-[15rem]  sm:leading-7 text-left w-full ml-0 "
           style={{ y: introY }}
         >
-          {[
-            "A glimpse into the inspired world,",
-            "Regalium marks the revolutionary manifestation",
-            "under the Svasa banner, and allows us a",
-            "peek into a time yet to come.",
-          ].map((item, index) => (
-            <p key={index} className="overflow-hidden m-0 block text-left">
+          {["An inheritance of the future"].map((item, index) => (
+            <p
+              key={index}
+              className="overflow-hidden m-0 block text-left sm:text-[1.5vw] uppercase"
+              style={{
+                fontFamily: "ChivoMono-Regular",
+                color: "#EDB161",
+                lineHeight: "normal",
+              }}
+            >
               <motion.span
                 className="inline-block origin-left "
                 initial={{ rotate: 30, y: "100%", opacity: 0 }}
@@ -61,8 +67,12 @@ const Landing = () => {
         </motion.div>
 
         <motion.div
-          className="heading sm:text-[14.5rem] text-7xl sm:font-light sm:my-[5rem] my-[2rem] tracking-tighter sm:leading-[12rem] leading-[4rem] text-left w-full -ml-2 sm:-ml-4 text-white relative z-10"
-          style={{ y: headingY }}
+          className="heading text-[8vw] sm:text-[8vw] tracking-tighter sm:leading-[12rem] text-left w-full sm:-ml-2 relative z-10"
+          style={{
+            y: headingY,
+            fontFamily: '"BonaNova", serif',
+            textTransform: "uppercase",
+          }}
         >
           {["Regalium"].map((item, index) => (
             <h1
@@ -88,19 +98,27 @@ const Landing = () => {
 
         {/* <FaArrowDown className="text-[#ffffffc5] " /> */}
         <motion.p
-          className="para2 mt-12 sm:w-1/2 sm:text-2xl sm:leading-7 "
-          style={{ y: subcopyY }}
+          className="para2 mt-0 sm:w-1/2 sm:text-[1.2vw] sm:leading-7 "
+          style={{ y: subcopyY, fontFamily: "BonaNova" }}
         >
-          We prioritise the presentation of our culture at the forefront. Owing
-          to the diversity of elements in art and architecture across South
-          India, there existed vast inspiration for Regalium's structure and
-          design.
+          In the heart of Bengaluru, in Koramangala, Regalium is a
+          next-generation development that forms a seamless world of retail,
+          workspaces, F&B, and culture for those who lead with vision. Rooted in
+          and inspired by our heritage, we pillar on luxury, community, and
+          innovation to create an inspired world.
         </motion.p>
 
-        <div className="studio">
+        <div className="studio mt-5 sm:mt-10">
           <a
             href=""
-            className="font-semibold sm:text-lg text-sm border-b-[.1px] border-[0.5] mt-7 inline-block"
+            className="inline-block text-xs sm:text-[1vw] px-6 py-3 sm:px-10 sm:py-4 rounded-full border text-center transition-all font-medium"
+            style={{
+              fontFamily: "ChivoMono-Regular",
+              // backgroundColor: "#1e2a3a",
+              color: "#EDB161",
+              borderColor: "#EDB161",
+              borderWidth: "1px",
+            }}
           >
             Virtual Walkthrough
           </a>
