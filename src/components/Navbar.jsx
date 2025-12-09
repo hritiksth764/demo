@@ -7,15 +7,15 @@ const Navbar = () => {
   return (
     <div className="w-full fixed z-[9999]">
       <nav
-        className="text-white flex items-center justify-between px-8 sm:px-[9rem] py-5"
+        className="text-white flex items-center justify-between px-8 sm:px-[9rem] py-1"
         style={{
-          background: "rgba(0, 0, 0, 0.01)",
+          background: "rgba(0, 0, 0, 0.03)",
 
           backdropFilter: "blur(4px)",
         }}
       >
         <div className="inline-block">
-          <img src={logoImage} alt="Logo" className="sm:w-40 w-25 h-auto" />
+          <img src={logoImage} alt="Logo" className="sm:w-45 w-25 h-auto" />
         </div>
 
         <motion.span
@@ -39,6 +39,12 @@ const Navbar = () => {
                 ease: [0.5, 0, 0.5, 1],
                 duration: 0.9,
                 delay: index * 0.14,
+              }}
+              style={{
+                color: "#EDB161",
+                fontFamily: "BonaNova",
+                letterSpacing: "0.01em",
+                textTransform: "uppercase",
               }}
               className="inline-block"
             >

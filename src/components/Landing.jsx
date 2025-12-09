@@ -37,7 +37,7 @@ const Landing = () => {
           className="absolute top-0 left-0 w-full h-[30%] pointer-events-none"
           style={{
             background:
-              "linear-gradient(180deg, #010F1A 0%, rgba(1, 15, 26, 0.5) 50%, transparent 100%)",
+              "linear-gradient(180deg, #010F1A 0%, rgba(1, 15, 26, 0.8) 50%, transparent 100%)",
           }}
         />
       </div>
@@ -76,30 +76,29 @@ const Landing = () => {
         <motion.div
           className="heading text-[8vw] sm:text-[8vw] tracking-tighter sm:leading-[12rem] text-left w-full sm:-ml-2 relative z-10"
           style={{
-            y: headingY,
+            y: introY,
             fontFamily: '"BonaNova", serif',
             textTransform: "uppercase",
           }}
         >
           {["Regalium"].map((item, index) => (
-            <h1
+            <p
               key={index}
-              className="m-0 p-0 block text-left text-white relative z-10"
+              className="m-0 p-0 block text-left text-white  z-10 overflow-hidden"
             >
               <motion.span
-                className="inline-block origin-left text-white relative"
-                initial={{ rotate: 10, y: "100%", opacity: 0 }}
+                className="inline-block origin-left "
+                initial={{ rotate: 30, y: "100%", opacity: 0 }}
                 animate={{ rotate: 0, y: "0%", opacity: 1 }}
                 transition={{
                   ease: Power4.easeInOut,
-                  duration: 1.5,
-                  delay: index * 0.1 + 0.5,
+                  duration: 2.5,
+                  delay: index * 0.5,
                 }}
-                style={{ display: "inline-block" }}
               >
                 {item}
               </motion.span>
-            </h1>
+            </p>
           ))}
         </motion.div>
 
