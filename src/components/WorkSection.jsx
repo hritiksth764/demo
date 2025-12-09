@@ -1,10 +1,37 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import imagePNG from "../assets/work1.png";
 import imageCopy2 from "../assets/image copy 3.png";
 import illustrationImage from "../assets/work2.png";
 
 const WorkSection = () => {
+  // Refs for each image container
+  const image1Ref = useRef(null);
+  const image2Ref = useRef(null);
+  const image3Ref = useRef(null);
+
+  // Scroll progress for each image
+  const { scrollYProgress: scroll1 } = useScroll({
+    target: image1Ref,
+    offset: ["start end", "end start"],
+  });
+
+  const { scrollYProgress: scroll2 } = useScroll({
+    target: image2Ref,
+    offset: ["start end", "end start"],
+  });
+
+  const { scrollYProgress: scroll3 } = useScroll({
+    target: image3Ref,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax movement - images move at different speeds within pinned containers
+  // Container stays fixed, image moves inside creating depth effect
+  const y1 = useTransform(scroll1, [0, 1], ["-30%", "30%"]);
+  const y2 = useTransform(scroll2, [0, 1], ["-40%", "40%"]);
+  const y3 = useTransform(scroll3, [0, 1], ["-35%", "35%"]);
+
   return (
     <div
       className="w-full bg-white py-16 sm:py-24 px-8 sm:px-[10rem]"
@@ -29,19 +56,24 @@ const WorkSection = () => {
       {/* Grid Layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
         {/* Upper Left - Large Image */}
-        <motion.div
-          className="w-full order-1 sm:order-1"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+        <div
+          ref={image1Ref}
+          className="w-full order-1 sm:order-1 overflow-hidden"
         >
-          <img
-            src={imagePNG}
-            alt="Faceted objects"
-            className="w-full h-auto object-cover"
-          />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <motion.img
+              src={imagePNG}
+              alt="Faceted objects"
+              className="w-full h-auto object-cover"
+              style={{ y: y1 }}
+            />
+          </motion.div>
+        </div>
 
         {/* Upper Right - Text Block */}
         <motion.div
@@ -104,34 +136,44 @@ const WorkSection = () => {
         </motion.div>
 
         {/* Mid-Right - Illustration Block */}
-        <motion.div
-          className="w-full order-3 sm:order-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+        <div
+          ref={image2Ref}
+          className="w-full order-3 sm:order-4 overflow-hidden"
         >
-          <img
-            src={illustrationImage}
-            alt="Architectural illustration"
-            className="w-full h-auto object-cover "
-          />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <motion.img
+              src={illustrationImage}
+              alt="Architectural illustration"
+              className="w-full h-auto object-cover"
+              style={{ y: y2 }}
+            />
+          </motion.div>
+        </div>
 
         {/* Lower Left - Image */}
-        <motion.div
-          className="w-full order-5 sm:order-5"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+        <div
+          ref={image3Ref}
+          className="w-full order-5 sm:order-5 overflow-hidden"
         >
-          <img
-            src={imageCopy2}
-            alt="Decorative objects"
-            className="w-full h-auto object-cover"
-          />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <motion.img
+              src={imageCopy2}
+              alt="Decorative objects"
+              className="w-full h-auto object-cover"
+              style={{ y: y3 }}
+            />
+          </motion.div>
+        </div>
 
         {/* Lower Right - Text Block */}
         <motion.div
