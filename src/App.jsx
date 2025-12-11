@@ -1,25 +1,50 @@
-import ImagesSection from "./components/ImagesSection.jsx";
-import Landing from "./components/Landing";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar.jsx";
-import PlayReel from "./components/PlayReel.jsx";
-import SectionSeparator from "./components/SectionSeparator.jsx";
-import SpreadSection from "./components/SpreadSection.jsx";
-import WorkSection from "./components/WorkSection";
-import LocomotiveScroll from "locomotive-scroll";
+import Home from "./components/Home";
+import About from "./components/About";
+import PageTransition from "./components/PageTransition";
 
-function App() {
-  // const locomotiveScroll = new LocomotiveScroll();
+function AppRoutes() {
+  const location = useLocation();
 
   return (
-    <div className="w-full">
-      <Navbar />
-      <Landing />
-      <SectionSeparator />
-      <WorkSection />
-      {/* <PlayReel />
-      <ImagesSection /> 
-      <SpreadSection /> */}
-    </div>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route
+          path="/"
+          element={
+            <PageTransition>
+              <Home />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <PageTransition>
+              <About />
+            </PageTransition>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <div className="w-full">
+        <Navbar />
+        <AppRoutes />
+      </div>
+    </Router>
   );
 }
 

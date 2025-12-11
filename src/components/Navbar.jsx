@@ -1,9 +1,19 @@
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { motion } from "framer-motion";
 import logoImage from "../assets/REG web assets.svg";
 
 const Navbar = () => {
+  const location = useLocation();
+
+  const navItems = [
+    { label: "Home", path: "/" },
+    { label: "Legacy", path: "/about" },
+    { label: "Community", path: "/community" },
+    { label: "Apply Now", path: "/apply" },
+  ];
+
   return (
     <div className="w-full fixed z-[9999]">
       <nav
@@ -14,9 +24,9 @@ const Navbar = () => {
           backdropFilter: "blur(4px)",
         }}
       >
-        <div className="inline-block">
+        <Link to="/" className="inline-block">
           <img src={logoImage} alt="Logo" className="sm:w-45 w-25 h-auto" />
-        </div>
+        </Link>
 
         <motion.span
           initial={{ y: "100%", opacity: 0 }}
@@ -29,8 +39,8 @@ const Navbar = () => {
         </motion.span>
 
         <motion.div className="overflow-hidden m-0 block text-left sm:flex sm:items-center sm:gap-5 hidden ">
-          {["Home", "Legacy", "Community", "Apply Now"].map((item, index) => (
-            <motion.a
+          {navItems.map((item, index) => (
+            <motion.div
               key={index}
               initial={{ y: "100%", opacity: 0 }}
               whileInView={{ y: "0%", opacity: 1 }}
@@ -40,16 +50,22 @@ const Navbar = () => {
                 duration: 0.9,
                 delay: index * 0.14,
               }}
-              style={{
-                color: "#EDB161",
-                fontFamily: "BonaNova",
-                letterSpacing: "0.01em",
-                textTransform: "uppercase",
-              }}
-              className="inline-block"
             >
-              {item}
-            </motion.a>
+              <Link
+                to={item.path}
+                style={{
+                  color: "#EDB161",
+                  fontFamily: "BonaNova",
+                  letterSpacing: "0.01em",
+                  textTransform: "uppercase",
+                }}
+                className={`inline-block ${
+                  location.pathname === item.path ? "underline" : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+            </motion.div>
           ))}
         </motion.div>
       </nav>
