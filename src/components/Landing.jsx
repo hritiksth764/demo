@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { FaArrowDown } from "react-icons/fa6";
-import { Power4 } from "gsap/all";
-import { motion, useScroll, useTransform } from "framer-motion"; // eslint-disable-line no-unused-vars
+import { useScroll, useTransform } from "framer-motion";
 import imagePNG from "../assets/image copy.png";
 
 const Landing = () => {
@@ -12,7 +11,6 @@ const Landing = () => {
   });
   // const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1]);
   const introY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const headingY = useTransform(scrollYProgress, [0, 1], [0, -180]);
   const subcopyY = useTransform(scrollYProgress, [0, 1], [0, -90]);
 
   return (
@@ -21,7 +19,7 @@ const Landing = () => {
       className="w-full h-[200vh] sm:h-[240vh] text-white relative font-regular tracking-tighter overflow-hidden"
     >
       <div className="image h-full overflow-hidden relative">
-        <motion.img
+        <img
           data-scroll
           data-scroll-speed="-1"
           className="w-full h-full object-cover sm:object-cover sm:object-top"
@@ -30,8 +28,6 @@ const Landing = () => {
           style={{
             objectPosition: "center top",
           }}
-          // style={{ scale: heroScale }}
-          transition={{ type: "spring", stiffness: 80, damping: 20 }}
         />
         <div
           className="absolute top-0 left-0 w-full h-[30%] pointer-events-none"
@@ -43,70 +39,48 @@ const Landing = () => {
       </div>
 
       <div className="absolute top-0 h-full px-8 sm:px-[10rem] ">
-        <motion.div
+        <div
           className="para mt-[8rem] sm:mt-[15rem]  sm:leading-7 text-left w-full ml-0 "
-          style={{ y: introY }}
+          style={{ transform: `translateY(${introY}px)` }}
         >
-          {["An inheritance of the future"].map((item, index) => (
-            <p
-              key={index}
-              className="overflow-hidden m-0 block text-left sm:text-[1.5vw] uppercase"
-              style={{
-                fontFamily: "ChivoMono-Regular",
-                color: "#EDB161",
-                lineHeight: "normal",
-              }}
-            >
-              <motion.span
-                className="inline-block origin-left "
-                initial={{ rotate: 30, y: "100%", opacity: 0 }}
-                animate={{ rotate: 0, y: "0%", opacity: 1 }}
-                transition={{
-                  ease: Power4.easeInOut,
-                  duration: 1.5,
-                  delay: index * 0.1,
-                }}
-              >
-                {item}
-              </motion.span>
-            </p>
-          ))}
-        </motion.div>
+          <p
+            className="overflow-hidden m-0 block text-left sm:text-[1.5vw] uppercase"
+            style={{
+              fontFamily: "ChivoMono-Regular",
+              color: "#EDB161",
+              lineHeight: "normal",
+            }}
+          >
+            An inheritance of the future
+          </p>
+        </div>
 
-        <motion.div
+        <div
           className="heading text-[8vw] sm:text-[8vw] tracking-tighter sm:leading-[12rem] text-left w-full sm:-ml-2 relative z-10"
           style={{
-            y: introY,
+            transform: `translateY(${introY}px)`,
             fontFamily: '"BonaNova", serif',
             textTransform: "uppercase",
           }}
         >
-          {["Regalium"].map((item, index) => (
-            <p
-              key={index}
-              className="m-0 p-0 block text-left text-white  z-10 overflow-hidden"
-            >
-              <motion.span
-                className="inline-block origin-left "
-                initial={{ rotate: 30, y: "100%", opacity: 0 }}
-                animate={{ rotate: 0, y: "0%", opacity: 1 }}
-                transition={{
-                  ease: Power4.easeInOut,
-                  duration: 2.5,
-                  delay: index * 0.5,
-                }}
-              >
-                {item}
-              </motion.span>
-            </p>
-          ))}
-        </motion.div>
+          <p
+            id="regalium-heading"
+            className="m-0 p-0 block text-left text-white z-10 overflow-hidden"
+            style={{
+              position: "relative",
+              top: "120px",
+              opacity: 0,
+            }}
+          >
+            Regalium
+          </p>
+        </div>
 
         {/* <FaArrowDown className="text-[#ffffffc5] " /> */}
-        <motion.p
+        <p
           className="para2 mt-0 sm:w-1/2 sm:text-[1.2vw] sm:leading-7 "
           style={{
-            y: subcopyY,
+            transform: `translateY(${subcopyY}px)`,
             fontFamily: "BonaNova",
             letterSpacing: "0.03em",
           }}
@@ -116,7 +90,7 @@ const Landing = () => {
           workspaces, F&B, and culture for those who lead with vision. Rooted in
           and inspired by our heritage, we pillar on luxury, community, and
           innovation to create an inspired world.
-        </motion.p>
+        </p>
 
         <div className="studio mt-5 sm:mt-10">
           <a

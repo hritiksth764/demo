@@ -1,178 +1,52 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import gsap from "gsap";
+import { contentAnimation } from "./TransitionOverlay";
 
-// Modern blur fade with depth (Premium feel)
-const blurFadeVariants = {
-  initial: {
-    opacity: 0,
-    filter: "blur(10px)",
-    scale: 1.05,
-  },
-  animate: {
-    opacity: 1,
-    filter: "blur(0px)",
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-  exit: {
-    opacity: 0,
-    filter: "blur(8px)",
-    scale: 0.95,
-    transition: {
-      duration: 0.6,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
+/**
+ * Barba.js-style Page Transition Component for React Router
+ *
+ * Implements the curtain-style transition pattern from barba.js
+ * with content animations
+ */
 
-// Elegant slide with parallax effect
-const elegantSlideVariants = {
-  initial: {
-    opacity: 0,
-    x: 60,
-    y: 20,
-  },
-  animate: {
-    opacity: 1,
-    x: 0,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-  exit: {
-    opacity: 0,
-    x: -60,
-    y: -20,
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
-
-// Smooth fade with subtle scale (Minimal luxury)
-const luxuryFadeVariants = {
-  initial: {
-    opacity: 0,
-    scale: 0.96,
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.9,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 1.04,
-    transition: {
-      duration: 0.6,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
-
-// Modern reveal with rotation (Dynamic)
-const revealRotateVariants = {
-  initial: {
-    opacity: 0,
-    rotateY: 15,
-    scale: 0.9,
-    filter: "blur(4px)",
-  },
-  animate: {
-    opacity: 1,
-    rotateY: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-  exit: {
-    opacity: 0,
-    rotateY: -15,
-    scale: 1.1,
-    filter: "blur(4px)",
-    transition: {
-      duration: 0.5,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
-
-// Smooth vertical slide with fade (Classic modern)
-const verticalSlideVariants = {
-  initial: {
-    opacity: 0,
-    y: 40,
-    filter: "blur(6px)",
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.7,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -40,
-    filter: "blur(6px)",
-    transition: {
-      duration: 0.5,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
-
-// Choose transition style
-const TRANSITION_STYLE = "luxuryFade"; // Options: 'blurFade', 'elegantSlide', 'luxuryFade', 'revealRotate', 'verticalSlide'
-
-const getVariants = () => {
-  switch (TRANSITION_STYLE) {
-    case "elegantSlide":
-      return elegantSlideVariants;
-    case "luxuryFade":
-      return luxuryFadeVariants;
-    case "revealRotate":
-      return revealRotateVariants;
-    case "verticalSlide":
-      return verticalSlideVariants;
-    default:
-      return blurFadeVariants;
-  }
-};
+// Track if this is the very first page load
+let isFirstPageLoad = true;
 
 const PageTransition = ({ children }) => {
+  const containerRef = useRef(null);
   const location = useLocation();
-  const variants = getVariants();
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // On very first page load, don't run any transitions - just show content normally
+    if (isFirstPageLoad) {
+      isFirstPageLoad = false;
+
+      // Reset heading to visible state without animation
+      const heading = document.querySelector("#regalium-heading");
+      if (heading) {
+        gsap.set(heading, { top: 0, opacity: 1 });
+      }
+
+      return;
+    }
+
+    // On subsequent route changes, run enter animation (like barba.js enter)
+    // This only happens when navigating between pages, not on refresh
+    contentAnimation();
+  }, [location.pathname]);
 
   return (
-    <motion.div
-      key={location.pathname}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={variants}
+    <div
+      ref={containerRef}
+      data-barba="container"
+      data-barba-namespace={location.pathname}
       className="w-full"
-      style={{
-        transformStyle: "preserve-3d",
-        perspective: "1000px",
-      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
