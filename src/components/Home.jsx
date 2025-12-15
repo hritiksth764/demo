@@ -10,7 +10,7 @@ const Home = () => {
       <Landing />
       <SectionSeparator />
       <WorkSection />
-      <ImagesSection />
+      {/* <ImagesSection /> */}
 
       {/* <PlayReel />
       <ImagesSection /> 
