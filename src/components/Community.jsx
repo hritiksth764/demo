@@ -6,7 +6,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { Power4 } from "gsap/all";
-import heroImage from "../assets/communityImages/Hero.png";
+import heroImage from "../assets/communityImages/hero.png";
 import heroOverlayImage from "../assets/herooverlay.png";
 import speakerImage from "../assets/communityImages/lastsection1.png";
 import lastsection2 from "../assets/communityImages/speaker2.png";
