@@ -12,7 +12,9 @@ const Navbar = () => {
     { label: "Home", path: "/" },
     { label: "Legacy", path: "/about" },
     { label: "Community", path: "/community" },
-    { label: "Apply Now", path: "/apply" },
+    { label: "Offices", path: "/office" },
+    { label: "Retail", path: "/retail" },
+    { label: "Exclusive Access", path: "/apply" },
   ];
 
   return (
@@ -57,7 +59,6 @@ const Navbar = () => {
                   color: "#EDB161",
                   fontFamily: "BonaNova",
                   letterSpacing: "0.01em",
-                  textTransform: "uppercase",
                 }}
                 className={`inline-block cursor-pointer ${
                   location.pathname === item.path ? "underline" : ""

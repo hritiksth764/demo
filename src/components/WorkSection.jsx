@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import imagePNG from "../assets/work1.png";
-import imageCopy2 from "../assets/image copy 3.png";
-import illustrationImage from "../assets/work2.png";
+import imagePNG from "../assets/homeImages/landing1.png";
+import illustrationImage from "../assets/homeImages/landing2.png";
+import imageCopy2 from "../assets/work3.png";
 
 const WorkSection = () => {
   // Refs for each image container

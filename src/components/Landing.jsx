@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import { FaArrowDown } from "react-icons/fa6";
 import { useScroll, useTransform } from "framer-motion";
-import imagePNG from "../assets/image copy.png";
 
+import imagePNG from "../assets/herohome.png";
+import heroOverlayImage from "../assets/herooverlay.png";
 const Landing = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -30,10 +31,21 @@ const Landing = () => {
           }}
         />
         <div
-          className="absolute top-0 left-0 w-full h-[30%] pointer-events-none"
+          className="absolute top-0 left-0 w-full h-[80%] pointer-events-none"
           style={{
             background:
-              "linear-gradient(180deg, #010F1A 0%, rgba(1, 15, 26, 0.8) 50%, transparent 100%)",
+              "linear-gradient(180deg, #010F1A 0%, rgba(1, 15, 26, 0.8) 1%, transparent 100%)",
+          }}
+        />
+        {/* Overlay Image */}
+        <div
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{
+            zIndex: 100,
+            backgroundImage: `url(${heroOverlayImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 1, // Adjust opacity as needed
           }}
         />
       </div>
@@ -108,6 +120,14 @@ const Landing = () => {
           </a>
         </div>
       </div>
+      {/* Bottom gradient overlay */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[20vh]"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)",
+        }}
+      />
     </div>
   );
 };
