@@ -7,6 +7,8 @@ import heritageCollage from "../assets/officeImages/news.png";
 import modernSpace1 from "../assets/officeImages/technology1.png";
 import modernSpace2 from "../assets/officeImages/technology2.png";
 import modernSpace3 from "../assets/officeImages/technology3.png";
+import modernSpaceLast from "../assets/officeImages/last.png";
+import executiveEducationImage1 from "../assets/officeImages/details1.png";
 
 const Offices = () => {
   const containerRef = useRef(null);
@@ -364,17 +366,17 @@ const Offices = () => {
               {
                 title: "THE UN-CLUTTERING",
                 description:
-                  "A workspace designed to declutter the mind and enhance focus, creating an environment where productivity meets tranquility.",
+                  "A curated environment that places you among those who think, build, and operate at your level.We embody engineered serendipity — whereintentional spaces and conversations-in-motionensure the right people meet naturally, and valueexpands through presence alone.",
               },
               {
                 title: "THE UN-ELEVATE",
                 description:
-                  "Elevating the workspace experience through thoughtful design and innovative solutions that inspire excellence.",
+                  "A curated environment that places you amongthose who think, build, and operate at your level.We embody engineered serendipity — whereintentional spaces and conversations-in-motion ensure the right people meet naturally, and value expands through presence alone.",
               },
               {
-                title: "THE UN-CLUTTERING",
+                title: "THE UN-ELEVATE",
                 description:
-                  "A workspace designed to declutter the mind and enhance focus, creating an environment where productivity meets tranquility.",
+                  "A curated environment that places you amongthose who think, build, and operate at your level.We embody engineered serendipity — whereintentional spaces and conversations-in-motion ensure the right people meet naturally, and value expands through presence alone.",
               },
             ].map((item, index) => (
               <motion.div
@@ -438,57 +440,103 @@ const Offices = () => {
       </div>
 
       {/* Section 6: GROWTH & EXCELLENCE — DRIVEN BY EXECUTIVE EDUCATION */}
-      <div className="w-full min-h-[100vh] sm:h-[100vh] bg-white py-8 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
+      <div className="w-full min-h-[100vh] sm:h-auto bg-white py-8 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
         <motion.div
-          className="w-full max-w-4xl mx-auto space-y-6 sm:space-y-8 text-center"
+          className="w-full max-w-6xl mx-auto space-y-8 sm:space-y-12"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold"
-            style={{
-              fontFamily: '"BonaNova", serif',
-              color: "#010F1A",
-              letterSpacing: "0.02em",
-            }}
-          >
-            GROWTH & EXCELLENCE — DRIVEN BY EXECUTIVE EDUCATION
-          </h2>
-          <p
-            className="text-sm sm:text-lg lg:text-xl leading-relaxed"
-            style={{
-              fontFamily: "BonaNova",
-              color: "#333333",
-              letterSpacing: "0.02em",
-            }}
-          >
-            Executive Education programs designed to build sustainable knowledge
-            and drive organizational growth through continuous learning and
-            development.
-          </p>
-          <div className="flex justify-center">
-            <a
-              href=""
-              className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all"
+          {/* Text Content Section */}
+          <div className="w-full max-w-4xl mx-auto space-y-6 sm:space-y-8 text-center">
+            <h2
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold"
               style={{
-                fontFamily: "BonaNova",
-                color: "#EDB161",
-                borderColor: "#EDB161",
-                borderWidth: "1px",
-                backgroundColor: "transparent",
+                fontFamily: '"BonaNova", serif',
+                color: "#0211A2",
+                fontWeight: "400",
+                letterSpacing: "0.02em",
               }}
             >
-              BOOK NOW
-            </a>
+              GROWTH & EXCELLENCE — DRIVEN BY EXECUTIVE EDUCATION
+            </h2>
+            <p
+              className="text-sm sm:text-base lg:text-lg leading-relaxed"
+              style={{
+                fontFamily: "BonaNova",
+                color: "#666666",
+                letterSpacing: "0.02em",
+              }}
+            >
+              At Executive Education, a keen focus on exponential growth urges
+              one to not just utilise it for imbibing invaluable knowledge, but
+              also for top leadership to pave the future. At Regalium, we
+              believe that learning never stops — with Executive Education
+              leading the way in facilitating just that.
+            </p>
+            <div className="flex justify-center">
+              <a
+                href=""
+                className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all uppercase"
+                style={{
+                  fontFamily: "BonaNova",
+                  color: "#5C5857",
+                  borderColor: "#EDB161",
+                  borderWidth: "1px",
+                  backgroundColor: "#ECE8DC",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                BOOK NOW
+              </a>
+            </div>
+          </div>
+
+          {/* Images Section - Two Side-by-Side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-8 sm:mt-12">
+            {/* Left Image */}
+            <motion.div
+              className="w-full h-[300px] sm:h-[450px] lg:h-[500px] relative overflow-hidden"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div
+                className="w-full h-full bg-gray-300"
+                style={{
+                  backgroundImage: `url(${executiveEducationImage1})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+            </motion.div>
+
+            {/* Right Image */}
+            <motion.div
+              className="w-full h-[300px] sm:h-[450px] lg:h-[500px] relative overflow-hidden"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <div
+                className="w-full h-full bg-gray-300"
+                style={{
+                  backgroundImage: `url(${executiveEducationImage1})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+            </motion.div>
           </div>
         </motion.div>
       </div>
 
       {/* Section 7: DETAILS OF THE EXECUTIVE EDUCATION */}
       <div
-        className="w-full min-h-[100vh] sm:h-[100vh] py-8 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center"
+        className="w-full min-h-[100vh] sm:h-[auto] py-8 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center"
         style={{ background: "#ECE8DC" }}
       >
         <motion.div
@@ -499,20 +547,22 @@ const Offices = () => {
           transition={{ duration: 0.8 }}
         >
           <h2
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold text-center"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold text-center mb-8 sm:mb-12"
             style={{
               fontFamily: '"BonaNova", serif',
-              color: "#010F1A",
+              color: "#0211A2",
+              fontWeight: "400",
               letterSpacing: "0.02em",
             }}
           >
             DETAILS OF THE EXECUTIVE EDUCATION
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16">
-            {/* Left Column - Text Block */}
+          {/* 2x2 Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+            {/* Top Left - Text Block */}
             <motion.div
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6 flex flex-col justify-center"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -526,13 +576,15 @@ const Offices = () => {
                   letterSpacing: "0.02em",
                 }}
               >
-                Executive Education programs and interim programs designed to
-                enhance leadership capabilities and drive organizational
-                excellence.
+                Xarpie opens up doorways to partnerships with Singularity
+                University, where the Enterprise Programs usher growth. With
+                OpenExO and Exponential Organisation coaching by Salim Ismail,
+                our programming brings cutting-edge executive education and
+                exponential growth tools directly into our members' hands.
               </p>
               <a
                 href=""
-                className="inline-block px-6 py-2 sm:px-8 sm:py-3 rounded-full border text-sm font-medium transition-all"
+                className="inline-block px-6 py-2 sm:px-8 sm:py-3 rounded-full border text-sm sm:text-base font-medium transition-all w-fit"
                 style={{
                   fontFamily: "BonaNova",
                   color: "#EDB161",
@@ -541,65 +593,81 @@ const Offices = () => {
                   backgroundColor: "transparent",
                 }}
               >
-                READ MORE
+                BOOK NOW
               </a>
             </motion.div>
 
-            {/* Right Column - Images and Text */}
-            <div className="space-y-8">
-              {/* Top Image */}
-              <motion.div
-                className="w-full h-[180px] sm:h-[250px] relative overflow-hidden"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                <div
-                  className="w-full h-full bg-gray-300"
-                  style={{
-                    backgroundImage:
-                      "url('https://via.placeholder.com/800x500/cccccc/666666?text=Auditorium')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-              </motion.div>
+            {/* Top Right - Image */}
+            <motion.div
+              className="w-full h-[250px] sm:h-[350px] lg:h-[400px] relative overflow-hidden"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <div
+                className="w-full h-full bg-gray-300"
+                style={{
+                  backgroundImage: `url(${executiveEducationImage1})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+            </motion.div>
 
-              {/* Bottom Text Block */}
-              <motion.div
-                className="space-y-6"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+            {/* Bottom Left - Image */}
+            <motion.div
+              className="w-full h-[250px] sm:h-[350px] lg:h-[400px] relative overflow-hidden"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <div
+                className="w-full h-full bg-gray-300"
+                style={{
+                  backgroundImage: `url(${executiveEducationImage1})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+            </motion.div>
+
+            {/* Bottom Right - Text Block */}
+            <motion.div
+              className="space-y-4 sm:space-y-6 flex flex-col justify-center"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <p
+                className="text-base sm:text-lg leading-relaxed"
+                style={{
+                  fontFamily: "BonaNova",
+                  color: "#333333",
+                  letterSpacing: "0.02em",
+                }}
               >
-                <p
-                  className="text-base sm:text-lg leading-relaxed"
-                  style={{
-                    fontFamily: "BonaNova",
-                    color: "#333333",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  Our teachers and global industry experts bring decades of
-                  experience to create transformative learning experiences.
-                </p>
-                <a
-                  href=""
-                  className="inline-block px-6 py-2 sm:px-8 sm:py-3 rounded-full border text-sm font-medium transition-all"
-                  style={{
-                    fontFamily: "BonaNova",
-                    color: "#EDB161",
-                    borderColor: "#EDB161",
-                    borderWidth: "1px",
-                    backgroundColor: "transparent",
-                  }}
-                >
-                  BOOK NOW
-                </a>
-              </motion.div>
-            </div>
+                The Machani Group connects members with global industry experts
+                and business veterans from platforms like Abundance 360,
+                Singularity University, EO, and YPO — delivering insight,
+                strategy, and mentorship tailored to your growth journey.
+              </p>
+              <a
+                href=""
+                className="inline-block px-6 py-2 sm:px-8 sm:py-3 rounded-full border text-sm sm:text-base font-medium transition-all w-fit"
+                style={{
+                  fontFamily: "BonaNova",
+                  color: "#EDB161",
+                  borderColor: "#EDB161",
+                  borderWidth: "1px",
+                  backgroundColor: "transparent",
+                }}
+              >
+                BOOK NOW
+              </a>
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -617,7 +685,8 @@ const Offices = () => {
             className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold text-center"
             style={{
               fontFamily: '"BonaNova", serif',
-              color: "#010F1A",
+              color: "#0211A2",
+              fontWeight: "400",
               letterSpacing: "0.02em",
             }}
           >
@@ -634,8 +703,7 @@ const Offices = () => {
             <div
               className="w-full h-full bg-gray-200"
               style={{
-                backgroundImage:
-                  "url('https://via.placeholder.com/1200x800/dddddd/666666?text=Modern+Lobby+Space')",
+                backgroundImage: `url(${modernSpaceLast})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

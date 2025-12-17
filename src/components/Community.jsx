@@ -11,6 +11,7 @@ import heroOverlayImage from "../assets/herooverlay.png";
 import speakerImage from "../assets/communityImages/lastsection1.png";
 import lastsection2 from "../assets/communityImages/speaker2.png";
 import lastsection3 from "../assets/communityImages/speaker3.png";
+import eventImage from "../assets/communityImages/event.png";
 
 // import accordionImage1 from "../assets/communityImages/accordion1.png";
 // import accordionImage2 from "../assets/communityImages/accordion2.png"; // Using same image for now, replace when you have accordion2.png
@@ -178,7 +179,8 @@ const Community = () => {
             transition={{ duration: 0.8 }}
             style={{
               fontFamily: '"BonaNova", serif',
-              color: "#010F1A",
+              color: "#0211A2",
+              fontWeight: "400",
               letterSpacing: "0.02em",
             }}
           >
@@ -211,8 +213,7 @@ const Community = () => {
             <div
               className="w-full h-full bg-black"
               style={{
-                backgroundImage:
-                  "url('https://via.placeholder.com/1920x800/1a1a1a/ffffff?text=Event+Stage+Image')",
+                backgroundImage: `url(${eventImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -245,7 +246,8 @@ const Community = () => {
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5vw] font-bold"
                 style={{
                   fontFamily: '"BonaNova", serif',
-                  color: "#010F1A",
+                  color: "#0211A2",
+                  fontWeight: "400",
                   letterSpacing: "0.02em",
                 }}
               >
@@ -316,7 +318,8 @@ const Community = () => {
             transition={{ duration: 0.8 }}
             style={{
               fontFamily: '"BonaNova", serif',
-              color: "#010F1A",
+              color: "#0211A2",
+              fontWeight: "400",
               letterSpacing: "0.02em",
             }}
           >
@@ -393,7 +396,8 @@ const Community = () => {
                   className="text-xl sm:text-2xl lg:text-3xl font-bold"
                   style={{
                     fontFamily: '"BonaNova", serif',
-                    color: "#010F1A",
+                    color: "#0211A2",
+                    fontWeight: "400",
                     letterSpacing: "0.02em",
                   }}
                 >
