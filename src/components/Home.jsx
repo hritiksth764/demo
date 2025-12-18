@@ -190,6 +190,8 @@ const Home = () => {
                 fontFamily: "ChivoMono-Regular",
                 color: "#FFF",
                 lineHeight: "normal",
+                fontWeight: "400",
+                letterSpacing: "0.03em",
               }}
             >
               An inheritance of the future
@@ -549,7 +551,7 @@ const Home = () => {
 
       {/* Section 4: Inspired World Section */}
       <div
-        className="w-full sm:h-[auto] h-[100vh] py-20 sm:py-20 px-8 sm:px-[10rem] flex items-center justify-center"
+        className="w-full sm:h-[100vh] h-[100vh] py-20 sm:py-20 px-8 sm:px-[10rem] flex items-center justify-center"
         style={{ background: "white" }}
       >
         <motion.div
