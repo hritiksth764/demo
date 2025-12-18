@@ -59,7 +59,7 @@ const Landing = () => {
             className="overflow-hidden m-0 block text-left sm:text-[1.5vw] uppercase"
             style={{
               fontFamily: "ChivoMono-Regular",
-              color: "#EDB161",
+              color: "#FFF",
               lineHeight: "normal",
             }}
           >
@@ -109,11 +109,13 @@ const Landing = () => {
             href=""
             className="inline-block text-xs sm:text-[1vw] px-6 py-3 sm:px-10 sm:py-4 rounded-full border text-center transition-all font-medium"
             style={{
-              fontFamily: "ChivoMono-Regular",
+              fontFamily: "BonaNova",
               // backgroundColor: "#1e2a3a",
-              color: "#EDB161",
+              color: "#BB924D",
               borderColor: "#EDB161",
+              fontWeight: "400",
               borderWidth: "1px",
+              textTransform: "uppercase",
             }}
           >
             Virtual Walkthrough
