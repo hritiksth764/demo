@@ -3,9 +3,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { gsap, ScrollTrigger } from "gsap/all";
 import imagePNG from "../assets/herohome.png";
 import heroOverlayImage from "../assets/herooverlay.png";
-import workImage1 from "../assets/homeImages/landing1.png";
-import workImage2 from "../assets/homeImages/landing2.png";
-import workImage3 from "../assets/work3.png";
+import workImage1 from "../assets/homeImages/optimised1.png";
+import workImage2 from "../assets/homeImages/optimised2.png";
+import workImage3 from "../assets/homeImages/optimised3.png";
 // Import images for interactive sections
 import boulevard1 from "../assets/retailImages/boulevard1.png";
 import boulevard2 from "../assets/retailImages/boulevard2.png";
@@ -15,6 +15,56 @@ import officeDetails from "../assets/officeImages/details1.png";
 import communityHero from "../assets/communityImages/hero.png";
 
 const Home = () => {
+  // Image loading states
+  const [imagesLoaded, setImagesLoaded] = useState({
+    work1: false,
+    work2: false,
+    work3: false,
+  });
+
+  // Preload work section images
+  useEffect(() => {
+    const preloadImages = async () => {
+      const imagePromises = [
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            setImagesLoaded((prev) => ({ ...prev, work1: true }));
+            resolve(img);
+          };
+          img.onerror = reject;
+          img.src = workImage1;
+        }),
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            setImagesLoaded((prev) => ({ ...prev, work2: true }));
+            resolve(img);
+          };
+          img.onerror = reject;
+          img.src = workImage2;
+        }),
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            setImagesLoaded((prev) => ({ ...prev, work3: true }));
+            resolve(img);
+          };
+          img.onerror = reject;
+          img.src = workImage3;
+        }),
+      ];
+
+      try {
+        await Promise.all(imagePromises);
+      } catch (error) {
+        console.error("Error preloading images:", error);
+      }
+    };
+
+    preloadImages();
+  }, []);
+
   // Landing section refs and transforms
   const landingContainerRef = useRef(null);
   const { scrollYProgress: landingScroll } = useScroll({
@@ -272,7 +322,7 @@ const Home = () => {
 
       {/* Section 2: Work Section */}
       <div
-        className="w-full bg-white py-16 sm:py-24 px-8 sm:px-[10rem]"
+        className="w-full sm:h-[auto] h-[auto] bg-white py-16 sm:py-24 px-8 sm:px-[10rem]"
         style={{
           fontFamily: "BonaNova",
         }}
@@ -298,19 +348,33 @@ const Home = () => {
           {/* Upper Left - Large Image */}
           <div
             ref={image1Ref}
-            className="w-full order-1 sm:order-1 overflow-hidden"
+            className="w-full order-1 sm:order-1 overflow-hidden relative"
+            style={{
+              minHeight: "clamp(300px, 40vw, 800px)",
+              height: "clamp(300px, 40vw, 800px)",
+            }}
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
+              className="w-full h-full"
             >
               <motion.img
                 src={workImage1}
                 alt="Faceted objects"
-                className="w-full h-auto object-cover"
-                style={{ y: y1 }}
+                className="w-full h-full object-cover"
+                style={{
+                  y: y1,
+                  opacity: imagesLoaded.work1 ? 1 : 0,
+                  transition: "opacity 0.3s ease-in-out",
+                  minHeight: "100%",
+                }}
+                loading="eager"
+                onLoad={() =>
+                  setImagesLoaded((prev) => ({ ...prev, work1: true }))
+                }
               />
             </motion.div>
           </div>
@@ -388,19 +452,33 @@ const Home = () => {
           {/* Mid-Right - Illustration Block */}
           <div
             ref={image2Ref}
-            className="w-full order-3 sm:order-4 overflow-hidden"
+            className="w-full order-3 sm:order-4 overflow-hidden relative"
+            style={{
+              minHeight: "clamp(300px, 40vw, 500px)",
+              height: "clamp(300px, 40vw, 700px)",
+            }}
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
+              className="w-full h-full"
             >
               <motion.img
                 src={workImage2}
                 alt="Architectural illustration"
-                className="w-full h-auto object-cover"
-                style={{ y: y2 }}
+                className="w-full h-full object-cover"
+                style={{
+                  y: y2,
+                  opacity: imagesLoaded.work2 ? 1 : 0,
+                  transition: "opacity 0.3s ease-in-out",
+                  minHeight: "100%",
+                }}
+                loading="eager"
+                onLoad={() =>
+                  setImagesLoaded((prev) => ({ ...prev, work2: true }))
+                }
               />
             </motion.div>
           </div>
@@ -408,19 +486,33 @@ const Home = () => {
           {/* Lower Left - Image */}
           <div
             ref={image3Ref}
-            className="w-full order-5 sm:order-5 overflow-hidden"
+            className="w-full order-5 sm:order-5 overflow-hidden relative"
+            style={{
+              minHeight: "clamp(300px, 40vw, 600px)",
+              height: "clamp(300px, 40vw, 600px)",
+            }}
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
+              className="w-full h-full"
             >
               <motion.img
                 src={workImage3}
                 alt="Decorative objects"
-                className="w-full h-auto object-cover"
-                style={{ y: y3 }}
+                className="w-full h-full object-cover"
+                style={{
+                  y: y3,
+                  opacity: imagesLoaded.work3 ? 1 : 0,
+                  transition: "opacity 0.3s ease-in-out",
+                  minHeight: "100%",
+                }}
+                loading="eager"
+                onLoad={() =>
+                  setImagesLoaded((prev) => ({ ...prev, work3: true }))
+                }
               />
             </motion.div>
           </div>
@@ -465,7 +557,7 @@ const Home = () => {
       {/* Section 3: Interactive Scroll Section */}
       <div
         ref={interactiveSectionRef}
-        className="w-full h-screen sm:h-screen py-20 sm:py-32 px-8 sm:px-[10rem] flex items-center relative"
+        className="w-full h-[100vh] sm:h-screen py-10 sm:py-32 px-8 sm:px-[10rem] flex items-center relative"
         style={{ background: "#ECE8DC" }}
       >
         {/* Content container that fills the viewport height */}
