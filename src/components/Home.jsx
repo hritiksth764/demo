@@ -343,6 +343,7 @@ const Home = () => {
                 borderColor: "#BB924D",
                 borderWidth: "1px",
                 textTransform: "uppercase",
+                letterSpacing: "0.2em",
               }}
             >
               Learn More
@@ -377,6 +378,7 @@ const Home = () => {
                 borderColor: "#BB924D",
                 borderWidth: "1px",
                 textTransform: "uppercase",
+                letterSpacing: "0.2em",
               }}
             >
               Learn More
@@ -451,6 +453,7 @@ const Home = () => {
                 borderColor: "#BB924D",
                 borderWidth: "1px",
                 textTransform: "uppercase",
+                letterSpacing: "0.2em",
               }}
             >
               Learn More
