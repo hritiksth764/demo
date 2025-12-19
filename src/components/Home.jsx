@@ -253,6 +253,7 @@ const Home = () => {
                 fontWeight: "400",
                 borderWidth: "1px",
                 textTransform: "uppercase",
+                letterSpacing: "0.2em",
               }}
             >
               Virtual Walkthrough
@@ -644,6 +645,7 @@ const Home = () => {
                 borderWidth: "1px",
                 backgroundColor: "transparent",
                 textTransform: "uppercase",
+                letterSpacing: "0.2em",
               }}
             >
               Virtual Walkthrough
