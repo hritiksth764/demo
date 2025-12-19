@@ -640,7 +640,7 @@ const Home = () => {
           >
             <a
               href=""
-              className="inline-block text-sm sm:text-base px-8 py-3 sm:px-10 sm:py-4 border text-center transition-all font-medium"
+              className="inline-block text-sm sm:text-base px-8 py-3 sm:px-10 sm:py-4 border rounded-full text-center transition-all font-medium"
               style={{
                 fontFamily: "BonaNova",
                 color: "#BB924D",
