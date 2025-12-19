@@ -245,7 +245,7 @@ const Home = () => {
           <div className="studio mt-5 sm:mt-10">
             <a
               href=""
-              className="inline-block text-xs sm:text-[1vw] px-6 py-3 sm:px-10 sm:py-4 rounded-full border text-center transition-all font-medium"
+              className="inline-block text-xs sm:text-[1vw] px-6 py-3 sm:px-10 sm:py-4 border text-center transition-all font-medium"
               style={{
                 fontFamily: "BonaNova",
                 color: "#BB924D",
@@ -524,7 +524,7 @@ const Home = () => {
               {/* Image */}
               <motion.div
                 key={`img-${activeIndex}`}
-                className="w-full h-[400px] sm:h-[500px] lg:h-[600px] rounded-lg overflow-hidden"
+                className="w-full h-[400px] sm:h-[500px] lg:h-[600px]  overflow-hidden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -640,7 +640,7 @@ const Home = () => {
           >
             <a
               href=""
-              className="inline-block text-sm sm:text-base px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-center transition-all font-medium"
+              className="inline-block text-sm sm:text-base px-8 py-3 sm:px-10 sm:py-4 border text-center transition-all font-medium"
               style={{
                 fontFamily: "BonaNova",
                 color: "#BB924D",
