@@ -245,7 +245,7 @@ const Home = () => {
           <div className="studio mt-5 sm:mt-10">
             <a
               href=""
-              className="inline-block text-xs sm:text-[1vw] px-6 py-3 sm:px-10 sm:py-4 border text-center transition-all font-medium"
+              className="inline-block text-xs sm:text-[1vw] px-6 py-3 sm:px-10 sm:py-4 border rounded-full text-center transition-all font-medium"
               style={{
                 fontFamily: "BonaNova",
                 color: "#BB924D",
