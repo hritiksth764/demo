@@ -191,7 +191,7 @@ const Home = () => {
                 color: "#FFF",
                 lineHeight: "normal",
                 fontWeight: "400",
-                letterSpacing: "0.03em",
+                letterSpacing: "0.04em",
               }}
             >
               An inheritance of the future
@@ -213,6 +213,13 @@ const Home = () => {
                 position: "relative",
                 top: "120px",
                 opacity: 0,
+                fontFamily: "BonaNova",
+                fontWeight: "400",
+                fontSize: "8vw",
+                lineHeight: "1",
+                letterSpacing: "0.02em",
+                textTransform: "uppercase",
+                textAlign: "left",
               }}
             >
               Regalium
@@ -555,7 +562,7 @@ const Home = () => {
         style={{ background: "white" }}
       >
         <motion.div
-          className="w-full max-w-7xl mx-auto text-center space-y-8 sm:space-y-12"
+          className="w-full max-w-7xl mx-auto text-center space-y-4 sm:space-y-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -598,7 +605,7 @@ const Home = () => {
 
           {/* Paragraph Text */}
           <motion.p
-            className="text-base sm:text-lg lg:text-xl leading-relaxed  mx-auto mt-8 sm:mt-10 w-full max-w-4xl"
+            className="text-base sm:text-lg lg:text-xl leading-relaxed  mx-auto mt-8 sm:mt-0 w-full max-w-4xl"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

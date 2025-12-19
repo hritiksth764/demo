@@ -128,12 +128,12 @@ const About = () => {
         <div className="absolute top-0 left-0 w-full h-full px-8 sm:px-[10rem]">
           {/* Main Title */}
           <motion.div
-            className="heading sm:text-[2vw] tracking-tighter text-left w-[50%] z-10 mt-[8rem] sm:mt-[15rem]"
+            className="heading sm:text-[2.8vw] text-left w-[70%] z-10 mt-[8rem] sm:mt-[15rem]"
             style={{
               y: introY,
               fontFamily: "BonaNova",
               textTransform: "uppercase",
-              color: "#EDB161",
+              color: "#ffffff",
               letterSpacing: "0.02em",
             }}
           >
