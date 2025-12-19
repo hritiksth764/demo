@@ -181,17 +181,18 @@ const Home = () => {
 
         <div className="absolute top-0 h-full px-8 sm:px-[10rem]">
           <div
-            className="para mt-[8rem] sm:mt-[15rem] sm:leading-7 text-left w-full ml-0"
+            className="para mt-[8rem] sm:mt-[15rem]  text-left w-full ml-0 mb-4 sm:text-[1vw] text-[1.1vw]"
             style={{ transform: `translateY(${introY}px)` }}
           >
             <p
               className="overflow-hidden m-0 block text-left sm:text-[1.5vw] uppercase"
               style={{
+                fontSize: "1.1vw",
                 fontFamily: "ChivoMono-Regular",
                 color: "#FFF",
                 lineHeight: "normal",
                 fontWeight: "400",
-                letterSpacing: "0.04em",
+                letterSpacing: "0.5em",
               }}
             >
               An inheritance of the future
@@ -199,7 +200,7 @@ const Home = () => {
           </div>
 
           <div
-            className="heading text-[8vw] sm:text-[8vw] tracking-tighter sm:leading-[12rem] text-left w-full sm:-ml-2 relative z-10"
+            className="heading text-[8vw] sm:text-[8vw] tracking-tighter sm:leading-[12rem] text-left w-full sm:-ml-2 relative z-10 mb-4"
             style={{
               transform: `translateY(${introY}px)`,
               fontFamily: '"BonaNova", serif',
@@ -215,9 +216,9 @@ const Home = () => {
                 opacity: 0,
                 fontFamily: "BonaNova",
                 fontWeight: "400",
-                fontSize: "8vw",
+                fontSize: "9vw",
                 lineHeight: "1",
-                letterSpacing: "0.02em",
+                letterSpacing: "0.05em",
                 textTransform: "uppercase",
                 textAlign: "left",
               }}
