@@ -127,10 +127,11 @@ const Retail = () => {
         <div className="absolute top-0 left-0 w-full h-full px-8 sm:px-[10rem]">
           {/* Main Title */}
           <motion.div
-            className="heading sm:text-[2.8vw] text-left w-[70%] z-10 mt-[8rem] sm:mt-[15rem]"
+            className="heading text-[25px] sm:text-[2.8vw] text-left w-[100%] sm:w-[70%] z-10 mt-[8rem] sm:mt-[15rem]"
             style={{
               y: introY,
               fontFamily: "BonaNova",
+              fontWeight: "400",
               textTransform: "uppercase",
               color: "#ffffff",
               letterSpacing: "0.02em",
@@ -161,7 +162,7 @@ const Retail = () => {
 
           {/* Intro Paragraph + Button */}
           <motion.div
-            className="m-0 para2 absolute bottom-16 right-0 sm:bottom-16 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left space-y-4 sm:space-y-6 z-10"
+            className="m-0 para2 absolute bottom-16 px-8 right-0 sm:bottom-16 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left space-y-4 sm:space-y-6 z-10"
             style={{
               y: heroParaY,
               fontFamily: "BonaNova",
@@ -180,7 +181,7 @@ const Retail = () => {
       </div>
 
       {/* Section 2: ENABLING A PROACTIVE & ENTERPRISING */}
-      <div className="w-full h-[auto] sm:h-[100vh] bg-white py-8 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
+      <div className="w-full h-[auto] sm:h-[100vh] bg-white py-24 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
         <motion.div
           className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-12"
           initial={{ opacity: 0, y: 50 }}
