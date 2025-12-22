@@ -180,7 +180,7 @@ const Retail = () => {
       </div>
 
       {/* Section 2: ENABLING A PROACTIVE & ENTERPRISING */}
-      <div className="w-full min-h-[100vh] sm:h-[100vh] bg-white py-8 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
+      <div className="w-full h-[auto] sm:h-[100vh] bg-white py-8 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
         <motion.div
           className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-12"
           initial={{ opacity: 0, y: 50 }}
@@ -189,7 +189,7 @@ const Retail = () => {
           transition={{ duration: 0.8 }}
         >
           <h2
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold text-center"
+            className="text-[30px] sm:text-[2.5vw] text-center"
             style={{
               fontFamily: '"BonaNova", serif',
               color: "#0211A2",
@@ -233,7 +233,7 @@ const Retail = () => {
       </div>
 
       {/* Section 3: AN ANCHOR OF OUR HERITAGE */}
-      <div className="w-full min-h-[100vh] sm:h-[100vh] relative overflow-hidden flex items-end px-8 sm:px-[10rem] pb-8 sm:pb-24">
+      <div className="w-full h-[100vh] sm:h-[100vh] relative overflow-hidden flex items-end px-8 sm:px-[10rem] pb-8 sm:pb-24">
         <div
           className="absolute inset-0 w-full h-full"
           style={{
@@ -245,8 +245,9 @@ const Retail = () => {
         <div
           className="absolute inset-0"
           style={{
+            zIndex: 1,
             background:
-              "background: linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%),lightgray 50% / cover no-repeat;",
+              "linear-gradient(180deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.60) 100%)",
           }}
         />
 
@@ -260,18 +261,21 @@ const Retail = () => {
           <h2
             className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold uppercase"
             style={{
-              fontFamily: '"BonaNova", serif',
+              fontFamily: "BonaNova",
               color: "#EDECED",
+              textTransform: "uppercase",
+              fontWeight: "400",
               letterSpacing: "0.02em",
             }}
           >
             REDEFINING RETAIL
           </h2>
           <p
-            className="text-base sm:text-lg lg:text-xl leading-relaxed"
+            className="text-base sm:text-[1.2vw] leading-relaxed"
             style={{
               fontFamily: "BonaNova",
               color: "#EDECED",
+              fontWeight: "400",
               letterSpacing: "0.02em",
             }}
           >
@@ -286,20 +290,21 @@ const Retail = () => {
       {/* Section 4: Open-format Retail Experience */}
       <div
         ref={imageSectionRef}
-        className="w-full py-16 sm:py-32 px-8 sm:px-[10rem] relative overflow-hidden"
+        className="w-full py-10 sm:py-22 px-8 sm:px-[10rem] relative overflow-hidden"
         style={{ background: "white" }}
       >
         {/* Center container for images */}
         <div className="w-full max-w-7xl mx-auto">
           {/* Image container with scroll-based animations */}
-          <div className="relative w-full h-[80vh] sm:h-[150vh] flex items-center justify-center">
+          <div className="relative w-full h-[80vh] sm:h-[120vh] flex items-center justify-center">
             {/* Center Title */}
             <div className="relative z-10 text-center px-4">
               <h2
-                className="text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5vw] font-bold leading-tight"
+                className="text-[30px] sm:text-[2.5vw] leading-tight"
                 style={{
                   fontFamily: '"BonaNova", serif',
                   color: "#0211A2",
+                  fontWeight: "400",
                   letterSpacing: "0.03em",
                   textTransform: "uppercase",
                 }}
@@ -459,7 +464,7 @@ const Retail = () => {
                 A GLIMPSE INTO THE INSPIRED WORLD
               </motion.p>
               <motion.h2
-                className="text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5vw] font-bold leading-tight"
+                className="text-[30px] sm:text-[2.5vw] leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -467,8 +472,8 @@ const Retail = () => {
                 style={{
                   fontFamily: "BonaNova",
                   color: "#0211A2",
-                  letterSpacing: "0.02em",
                   fontWeight: "400",
+                  letterSpacing: "0.02em",
                   textTransform: "uppercase",
                 }}
               >
@@ -559,7 +564,7 @@ const Retail = () => {
               IMMERSIVE JOURNEYS FOR BRANDS & BUYERS
             </motion.p>
             <motion.h2
-              className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw]"
+              className="text-[30px] sm:text-[2.5vw]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

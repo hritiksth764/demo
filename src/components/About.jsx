@@ -162,7 +162,7 @@ const About = () => {
 
           {/* Introductory Paragraph */}
           <motion.p
-            className="m-0 para2 absolute top-[35%] right-0 sm:top-[40%] px-8 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left z-10"
+            className="m-0 para2 absolute top-[35%] right-0 sm:top-[40%] px-8 sm:right-[9rem] sm:w-[50%] text-[16px] sm:text-[1.2vw] text-left z-10"
             style={{
               y: heroParaY,
               fontFamily: "BonaNova",
@@ -223,12 +223,11 @@ const About = () => {
                 {activeItem.title}
               </h3>
               <p
-                className="text-base sm:text-lg leading-relaxed mb-0 mt-0 w-[80%]"
+                className="text-[16px] sm:text-[1.2vw] leading-relaxed mb-0 mt-0 w-[80%]"
                 style={{
                   fontFamily: "BonaNova",
                   fontWeight: "400",
                   color: "#5C5857",
-                  fontSize: "1.1vw",
                 }}
               >
                 {activeItem.description}
@@ -357,7 +356,7 @@ const About = () => {
               AN ANCHOR OF OUR HERITAGE
             </h2>
             <p
-              className="text-base sm:text-lg lg:text-xl xl:text-[1.2vw] leading-relaxed"
+              className="text-[16px] sm:text-[1.2vw] leading-relaxed"
               style={{
                 fontFamily: "BonaNova",
                 color: "#ffffff",
@@ -429,7 +428,7 @@ const About = () => {
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.p
-                      className="text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed"
+                      className="text-[16px] sm:text-[1.2vw] max-w-xl leading-relaxed"
                       style={{
                         fontFamily: "BonaNova",
                         letterSpacing: "0.02em",
@@ -497,7 +496,7 @@ const About = () => {
 
           {/* Paragraph Text */}
           <motion.p
-            className="text-base sm:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto mt-8 sm:mt-12"
+            className="text-[16px] sm:text-[1.2vw] leading-relaxed max-w-3xl mx-auto mt-8 sm:mt-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
