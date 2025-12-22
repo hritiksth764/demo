@@ -181,9 +181,9 @@ const Retail = () => {
       </div>
 
       {/* Section 2: ENABLING A PROACTIVE & ENTERPRISING */}
-      <div className="w-full h-[100vh] sm:h-[100vh] bg-white py-24 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
+      <div className="w-full min-h-screen bg-white pt-32 sm:pt-32 pb-24 sm:pb-24 px-8 sm:px-[10rem] flex flex-col justify-start items-center">
         <motion.div
-          className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-12"
+          className="w-full max-w-6xl mx-auto "
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
