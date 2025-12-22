@@ -181,7 +181,7 @@ const Retail = () => {
       </div>
 
       {/* Section 2: ENABLING A PROACTIVE & ENTERPRISING */}
-      <div className="w-full h-[auto] sm:h-[100vh] bg-white py-24 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
+      <div className="w-full h-[100vh] sm:h-[100vh] bg-white py-24 sm:py-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center">
         <motion.div
           className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-12"
           initial={{ opacity: 0, y: 50 }}
