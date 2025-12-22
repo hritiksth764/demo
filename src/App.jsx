@@ -36,7 +36,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/Community"
+        path="/community"
         element={
           <PageTransition>
             <Community />
@@ -44,7 +44,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/Office"
+        path="/office"
         element={
           <PageTransition>
             <Office />
@@ -52,7 +52,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/Retail"
+        path="/retail"
         element={
           <PageTransition>
             <Retail />
@@ -60,7 +60,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/ExclusiveAccess"
+        path="/apply"
         element={
           <PageTransition>
             <ExclusiveAccess />
