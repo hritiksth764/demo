@@ -181,9 +181,9 @@ const Retail = () => {
       </div>
 
       {/* Section 2: ENABLING A PROACTIVE & ENTERPRISING */}
-      <div className="w-full min-h-screen bg-white pt-32 sm:pt-32 pb-24 sm:pb-24 px-8 sm:px-[10rem] flex flex-col justify-start items-center">
+      <div className="w-full h-[auto] sm:h-[100vh] bg-white pt-14 sm:pt-24 pb-14 sm:pb-24 px-8 sm:px-[10rem] flex flex-col justify-start items-center">
         <motion.div
-          className="w-full max-w-6xl mx-auto "
+          className="w-full max-w-6xl mx-auto"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -201,7 +201,7 @@ const Retail = () => {
             LUXURY RETAIL AT REGALIUM
           </h2>
 
-          <div className="w-full h-[300px] sm:h-[500px] relative overflow-hidden">
+          <div className="w-full h-[300px] sm:h-[600px] relative overflow-hidden">
             <div
               className="w-full h-full "
               style={{
@@ -291,7 +291,7 @@ const Retail = () => {
       {/* Section 4: Open-format Retail Experience */}
       <div
         ref={imageSectionRef}
-        className="w-full py-10 sm:py-22 px-8 sm:px-[10rem] relative overflow-hidden"
+        className="w-full py-10 sm:pt-24 pb-14 sm:pb-24 px-8 sm:px-[10rem] relative overflow-hidden"
         style={{ background: "white" }}
       >
         {/* Center container for images */}
@@ -416,7 +416,7 @@ const Retail = () => {
 
       {/* Section 5: Plug & Play at The Boulevard */}
       <div
-        className="w-full min-h-[100vh] sm:h-[100vh] py-8 sm:py-24 px-8 sm:px-[10rem] flex items-center"
+        className="w-full h-[100vh] sm:h-[100vh] pt-14 sm:pt-24 pb-14 sm:pb-24 px-8 sm:px-[10rem] flex items-center"
         style={{ background: "#ECE8DC" }}
       >
         <motion.div
