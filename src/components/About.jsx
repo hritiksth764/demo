@@ -24,7 +24,7 @@ const About = () => {
       image: "/src/assets/aboutImages/timeline1.png",
     },
     {
-      year: "2005",
+      year: "1954",
       title: "EXPANDING HORIZONS",
       description:
         "The Machani Group expanded its footprint, building transformative spaces that redefined how communities gather, work, and experience culture.",
@@ -32,7 +32,7 @@ const About = () => {
         "https://via.placeholder.com/800x600/333333/ffffff?text=Expanding+Horizons",
     },
     {
-      year: "2015",
+      year: "1960",
       title: "DESIGN-LED FUTURES",
       description:
         "A renewed focus on Indo-luxury and precision-led design brought together global sensibilities and local craftsmanship in bold new ways.",
@@ -40,7 +40,7 @@ const About = () => {
         "https://via.placeholder.com/800x600/555555/ffffff?text=Design+Led+Futures",
     },
     {
-      year: "2027",
+      year: "2014",
       title: "THE URBAN CANVAS",
       description:
         "Regalium emerges as a layered, living canvas—where retail, workspaces, and cultural programs intersect to create a new kind of city centre.",
@@ -48,7 +48,7 @@ const About = () => {
         "https://via.placeholder.com/800x600/777777/ffffff?text=Urban+Canvas",
     },
     {
-      year: "2030",
+      year: "2026",
       title: "A CONTINUUM OF GROWTH",
       description:
         "Looking ahead, every intervention is imagined as part of a continuum—sustainable, future-first, and deeply rooted in heritage.",
@@ -162,13 +162,12 @@ const About = () => {
 
           {/* Introductory Paragraph */}
           <motion.p
-            className="m-0 px-8 para2 absolute bottom-16 right-0 sm:bottom-16 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left"
+            className="m-0 para2 absolute top-[35%] right-0 sm:top-[40%] px-8 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left z-10"
             style={{
               y: heroParaY,
               fontFamily: "BonaNova",
               letterSpacing: "0.03em",
               color: "#ffffff",
-              zIndex: 10,
             }}
           >
             When we look to the future, we are envisioning a holistic ecosystem
@@ -267,46 +266,49 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          {/* Horizontal Timeline Line */}
-          <div className="relative w-full h-1 bg-[#EDB161] sm:mb-8 mb-10">
-            {/* Timeline Years */}
-            <div className="absolute top-0 left-0 w-full flex justify-between items-start">
-              {timelineItems.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center cursor-pointer group"
+          {/* Timeline Years */}
+          <div className="relative w-full flex justify-between items-center pt-8">
+            {timelineItems.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center cursor-pointer group relative"
+                onClick={() => setActiveIndex(index)}
+              >
+                {/* Year */}
+                <motion.span
+                  className="text-sm sm:text-2xl font-semibold"
                   style={{
-                    position: "absolute",
-                    left: `${(index * 100) / 4}%`,
-                    transform: "translateX(-50%)",
+                    fontFamily: "chivo-mono",
+                    fontWeight: "400",
                   }}
-                  onClick={() => setActiveIndex(index)}
+                  animate={{
+                    color: activeIndex === index ? "#BB924D" : "#D9B57A",
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  }}
+                  whileHover={{
+                    color: "#BB924D",
+                  }}
                 >
-                  {/* Vertical Line */}
-                  <div
-                    className={`w-0.5 mb-2 transition-colors duration-300 ${
-                      activeIndex === index ? "bg-[#EDB161]" : "bg-[#d9d9d9]"
-                    }`}
-                    style={{ height: "20px" }}
-                  />
-                  {/* Year */}
-                  <span
-                    className="text-sm sm:text-2xl font-semibold transition-colors duration-300 group-hover:text-[#EDB161]"
-                    style={{
-                      fontFamily: "chivo-mono",
-                      fontWeight: "400",
-                      color: activeIndex === index ? "#BB924D" : "#666666",
-                    }}
-                  >
-                    {item.year}
-                  </span>
-                  {/* Underline for active years */}
-                  {activeIndex === index && (
-                    <div className="w-12 sm:w-16 h-0.5 bg-[#EDB161] mt-1 transition-all duration-300" />
-                  )}
-                </div>
-              ))}
-            </div>
+                  {item.year}
+                </motion.span>
+                {/* Underline for active years */}
+                <motion.div
+                  className="w-12 sm:w-20 h-1 bg-[#EDB161] mt-2 origin-center"
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{
+                    scaleX: activeIndex === index ? 1 : 0,
+                    opacity: activeIndex === index ? 1 : 0,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
+            ))}
           </div>
         </motion.div>
       </div>
@@ -447,6 +449,7 @@ const About = () => {
           );
         })}
       </div>
+
       <div
         className="w-full h-[100vh] py-20 sm:py-32 px-8 sm:px-[10rem] flex items-center justify-center"
         style={{ background: "white" }}

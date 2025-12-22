@@ -117,17 +117,17 @@ const Community = () => {
         <div className="absolute top-0 left-0 w-full h-full px-8 sm:px-[10rem]">
           {/* Main Title */}
           <motion.div
-            className="heading sm:text-[2vw] tracking-tighter text-left w-[50%] z-10 mt-[8rem] sm:mt-[15rem]"
+            className="heading sm:text-[2.8vw] text-left w-[70%] z-10 mt-[8rem] sm:mt-[15rem]"
             style={{
               y: introY,
               fontFamily: "BonaNova",
               textTransform: "uppercase",
-              color: "#EDB161",
+              color: "#ffffff",
               letterSpacing: "0.02em",
             }}
           >
             {[
-              "A VISION BY THE MACHANI GROUP — ROOTED IN OUR HERITAGE, BUILT FOR OUR TOMORROW",
+              "WHERE THE EXCEPTIONAL FIND THEIR CIRCLE — AND CULTURE, CRAFT, AND INTELLECT CONVERGE",
             ].map((item, index) => (
               <p
                 key={index}
@@ -151,13 +151,12 @@ const Community = () => {
 
           {/* Introductory Paragraph */}
           <motion.p
-            className="m-0 px-8 para2 absolute bottom-16 right-0 sm:bottom-16 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left"
+            className="m-0 para2 absolute top-[35%] right-0 sm:top-[40%] px-8 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left z-10"
             style={{
               y: heroParaY,
               fontFamily: "BonaNova",
               letterSpacing: "0.03em",
               color: "#ffffff",
-              zIndex: 10,
             }}
           >
             When we look to the future, we are envisioning a holistic ecosystem

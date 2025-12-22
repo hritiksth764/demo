@@ -47,7 +47,7 @@ const Offices = () => {
         <div className="absolute top-0 left-0 w-full h-full px-8 sm:px-[10rem]">
           {/* Main Title */}
           <motion.div
-            className="heading sm:text-[2.8vw] tracking-tighter text-left w-[55%] z-10 mt-[8rem] sm:mt-[15rem]"
+            className="heading sm:text-[2.8vw] text-left w-[70%] z-10 mt-[8rem] sm:mt-[15rem]"
             style={{
               y: introY,
               fontFamily: "BonaNova",
@@ -79,34 +79,20 @@ const Offices = () => {
 
           {/* Intro Paragraph + Button */}
           <motion.div
-            className="m-0 para2 absolute bottom-16 right-0 sm:bottom-16 sm:right-[9rem] sm:w-[40%] text-left space-y-6"
+            className="m-0 para2 absolute bottom-16 right-0 sm:bottom-16 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left space-y-4 sm:space-y-6 z-10"
             style={{
               y: heroParaY,
               fontFamily: "BonaNova",
-              letterSpacing: "0.02em",
+              letterSpacing: "0.03em",
               color: "#ffffff",
-              zIndex: 10,
             }}
           >
-            <p className="text-base sm:text-lg lg:text-xl leading-relaxed">
+            <p className="leading-relaxed">
               At Regalium, office spaces are designed to go beyond work. Here,
               we cover the essentials that make for a creative thought process,
               meticulous performance, and a sound delivery. We offer these
               spaces to future-thinkers and doers.
             </p>
-            <a
-              href=""
-              className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all"
-              style={{
-                fontFamily: "BonaNova",
-                color: "#ffffff",
-                borderColor: "#ffffff",
-                borderWidth: "1px",
-                backgroundColor: "transparent",
-              }}
-            >
-              View Our Calendar
-            </a>
           </motion.div>
         </div>
       </div>

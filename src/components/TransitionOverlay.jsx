@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import transitionOverlayImage from "../assets/Attached_image.png";
 
 /**
  * Transition Overlay Component
@@ -21,9 +22,13 @@ const TransitionOverlay = () => {
   return (
     <div
       ref={overlayRef}
-      className="transition fixed inset-0 bg-black z-[99999] pointer-events-none"
+      className="transition fixed inset-0 z-[99999] pointer-events-none"
       style={{
         transformOrigin: "bottom",
+        backgroundImage: `url(${transitionOverlayImage})`,
+        backgroundSize: "cover",
+        // backgroundPosition: "center",
+        backgroundColor: "#000000",
       }}
     />
   );

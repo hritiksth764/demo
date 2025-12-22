@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import heroImage from "../assets/retailImages/hero.png";
 import architecturalBlueprint from "../assets/retailImages/layout.png";
-import { Power4 } from "gsap/all";
+import { gsap, ScrollTrigger, Power4 } from "gsap/all";
 import heritageCollage from "../assets/retailImages/news.png";
 import interiorMallView from "../assets/retailImages/mallview1.png";
 import interiorMallView2 from "../assets/retailImages/mallview2.png";
@@ -25,6 +25,80 @@ const Retail = () => {
 
   const heroParaY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const introY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
+  // Refs for scroll-based image animations
+  const imageSectionRef = useRef(null);
+  const image1Ref = useRef(null);
+  const image2Ref = useRef(null);
+  const image3Ref = useRef(null);
+  const image4Ref = useRef(null);
+
+  useEffect(() => {
+    if (!imageSectionRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: imageSectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+
+    if (image1Ref.current) {
+      tl.to(
+        image1Ref.current,
+        {
+          x: "-30%",
+          y: "-20%",
+          ease: "none",
+        },
+        "a"
+      );
+    }
+
+    if (image2Ref.current) {
+      tl.to(
+        image2Ref.current,
+        {
+          x: "30%",
+          y: "-30%",
+          ease: "none",
+        },
+        "a"
+      );
+    }
+
+    if (image3Ref.current) {
+      tl.to(
+        image3Ref.current,
+        {
+          x: "-20%",
+          y: "20%",
+          ease: "none",
+        },
+        "a"
+      );
+    }
+
+    if (image4Ref.current) {
+      tl.to(
+        image4Ref.current,
+        {
+          x: "25%",
+          y: "-15%",
+          ease: "none",
+        },
+        "a"
+      );
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   return (
     <div className="w-full">
@@ -53,7 +127,7 @@ const Retail = () => {
         <div className="absolute top-0 left-0 w-full h-full px-8 sm:px-[10rem]">
           {/* Main Title */}
           <motion.div
-            className="heading text-2xl sm:text-[2.8vw] tracking-tighter text-left w-full sm:w-[55%] z-10 mt-[6rem] sm:mt-[15rem]"
+            className="heading sm:text-[2.8vw] text-left w-[70%] z-10 mt-[8rem] sm:mt-[15rem]"
             style={{
               y: introY,
               fontFamily: "BonaNova",
@@ -63,7 +137,7 @@ const Retail = () => {
             }}
           >
             {[
-              "A PLAYGROUND OF INDULGENCE TAKES CENTRE STAGE AND ALLOWS US TO WELCOME THE COMMUNITY INTO A LUXE SETTING.",
+              "INDULGENCE TAKES CENTRE STAGE AND ALLOWS US TO WELCOME THE COMMUNITY INTO A LUXE SETTING",
             ].map((item, index) => (
               <p
                 key={index}
@@ -87,34 +161,20 @@ const Retail = () => {
 
           {/* Intro Paragraph + Button */}
           <motion.div
-            className="m-0 para2 absolute bottom-8 sm:bottom-16 right-0 sm:right-[9rem] w-full sm:w-[40%] px-0 sm:px-0 text-left space-y-4 sm:space-y-6"
+            className="m-0 para2 absolute bottom-16 right-0 sm:bottom-16 sm:right-[9rem] sm:w-[50%] sm:text-[1.4vw] text-left space-y-4 sm:space-y-6 z-10"
             style={{
               y: heroParaY,
               fontFamily: "BonaNova",
-              letterSpacing: "0.02em",
+              letterSpacing: "0.03em",
               color: "#ffffff",
-              zIndex: 10,
             }}
           >
-            <p className="text-base sm:text-lg lg:text-xl leading-relaxed">
+            <p className="leading-relaxed">
               When we look to the future, we are envisioning a holistic
               ecosystem — one that caters to each need, want, and aspiration of
               the members of our community. With our all-encompassing retail
               spaces, we deliver luxury at each step.
             </p>
-            <a
-              href=""
-              className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all"
-              style={{
-                fontFamily: "BonaNova",
-                color: "#ffffff",
-                borderColor: "#ffffff",
-                borderWidth: "1px",
-                backgroundColor: "transparent",
-              }}
-            >
-              View Our Calendar
-            </a>
           </motion.div>
         </div>
       </div>
@@ -158,13 +218,15 @@ const Retail = () => {
               className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all"
               style={{
                 fontFamily: "BonaNova",
-                color: "#EDB161",
-                borderColor: "#EDB161",
+                color: "#BB924D",
+                borderColor: "#BB924D",
                 borderWidth: "1px",
                 backgroundColor: "transparent",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
               }}
             >
-              EXPLORE THE NEXT-GEN OFFICE SPACES
+              DOWNLOAD FLOOR PLANS
             </a>
           </div>
         </motion.div>
@@ -223,62 +285,16 @@ const Retail = () => {
 
       {/* Section 4: Open-format Retail Experience */}
       <div
-        className="w-full min-h-[150vh] sm:h-auto py-8 sm:py-24 px-8 sm:px-[10rem]"
+        ref={imageSectionRef}
+        className="w-full py-16 sm:py-32 px-8 sm:px-[10rem] relative overflow-hidden"
         style={{ background: "white" }}
       >
-        <motion.div
-          className="w-full max-w-7xl mx-auto"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Aesthetic Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-6">
-            {/* Top Left Image */}
-            <motion.div
-              className="md:col-span-5 w-full h-[200px] sm:h-[480px] relative overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <div className="absolute top-2 left-2 text-xs uppercase tracking-wider text-gray-600 z-10">
-                Luxury
-              </div>
-              <div
-                className="w-full sm:w-[300px] h-full sm:h-[400px] sm:mt-10 mx-auto"
-                style={{
-                  backgroundImage: `url(${interiorMallView})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-            </motion.div>
-
-            {/* Top Right Image */}
-            <motion.div
-              className="md:col-span-7 w-full h-[200px] sm:h-[280px] relative overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="absolute top-2 left-2 text-xs uppercase tracking-wider text-gray-600 z-10">
-                Luxury
-              </div>
-              <div
-                className="w-full sm:w-[300px] h-full sm:h-[320px] sm:mt-10 sm:ml-auto mx-auto"
-                style={{
-                  backgroundImage: `url(${interiorMallView2})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-            </motion.div>
-
-            {/* Center Heading - Spans full width */}
-            <div className="md:col-span-12 text-center py-6 sm:py-12 px-4">
+        {/* Center container for images */}
+        <div className="w-full max-w-7xl mx-auto">
+          {/* Image container with scroll-based animations */}
+          <div className="relative w-full h-[80vh] sm:h-[150vh] flex items-center justify-center">
+            {/* Center Title */}
+            <div className="relative z-10 text-center px-4">
               <h2
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5vw] font-bold leading-tight"
                 style={{
@@ -288,25 +304,31 @@ const Retail = () => {
                   textTransform: "uppercase",
                 }}
               >
-                AN OPEN-FORMAT RETAIL EXPERIENCE
-                <br />
-                THAT LENDS TO FREEDOM AND
-                <br />
-                DISCOVERY
+                A SEAMLESS AND INTUITIVE
+                <br /> RETAIL JOURNEY
               </h2>
             </div>
 
-            {/* Bottom Left Image */}
-            <motion.div
-              className="md:col-span-6 w-full h-[200px] sm:h-[300px] relative overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+            {/* Image 1 - Top Left */}
+            <div
+              ref={image1Ref}
+              className="absolute w-[40%] sm:w-[28%] aspect-[3/4] top-0 left-0 sm:left-[-10%]"
             >
-              <div className="absolute top-2 left-2 text-xs uppercase tracking-wider text-gray-600 z-10">
-                Luxury
-              </div>
+              <div
+                className="w-full h-full"
+                style={{
+                  backgroundImage: `url(${interiorMallView2})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+            </div>
+
+            {/* Image 2 - Top Right */}
+            <div
+              ref={image2Ref}
+              className="absolute w-[35%] sm:w-[30%] aspect-[4/3] top-0 right-0 sm:right-[-8%]"
+            >
               <div
                 className="w-full h-full"
                 style={{
@@ -315,19 +337,13 @@ const Retail = () => {
                   backgroundPosition: "center",
                 }}
               />
-            </motion.div>
+            </div>
 
-            {/* Bottom Right Image */}
-            <motion.div
-              className="md:col-span-6 w-full h-[200px] sm:h-[500px] relative overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+            {/* Image 3 - Bottom Left */}
+            <div
+              ref={image3Ref}
+              className="absolute w-[38%] sm:w-[32%] aspect-[4/3] bottom-0 left-0 sm:left-[-12%]"
             >
-              <div className="absolute top-2 left-2 text-xs uppercase tracking-wider text-gray-600 z-10">
-                Luxury
-              </div>
               <div
                 className="w-full h-full"
                 style={{
@@ -336,11 +352,26 @@ const Retail = () => {
                   backgroundPosition: "center",
                 }}
               />
-            </motion.div>
+            </div>
+
+            {/* Image 4 - Bottom Right */}
+            <div
+              ref={image4Ref}
+              className="absolute w-[42%] sm:w-[28%] aspect-[3/4] bottom-0 right-0 sm:right-[-10%]"
+            >
+              <div
+                className="w-full h-full"
+                style={{
+                  backgroundImage: `url(${interiorMallView})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+            </div>
           </div>
 
           {/* Description + Button */}
-          <div className="space-y-4 sm:space-y-6 text-center max-w-3xl mx-auto mt-6 sm:mt-14">
+          <div className="text-center max-w-3xl mx-auto mt-16 sm:mt-24 space-y-6 sm:space-y-8">
             <p
               className="text-sm sm:text-base lg:text-lg leading-relaxed"
               style={{
@@ -349,28 +380,32 @@ const Retail = () => {
                 letterSpacing: "0.02em",
               }}
             >
-              We prioritise the presentation of our culture at the forefront.
-              Owing to the diversity of elements in art and architecture across
-              South India, there existed vast inspiration for Regalium's
-              structure and design.
+              Here, luxury is redefined through exceptional craftsmanship,
+              innovative expressions, and impeccable service. Seamlessly
+              blending premium customer care with cutting-edge technology, this
+              exclusive space invites members to explore a world of unparalleled
+              elegance, where every detail is designed to elevate your shopping
+              journey.
             </p>
             <div className="flex justify-center">
               <a
                 href=""
-                className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all"
+                className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all hover:bg-[#EDB161] hover:border-[#EDB161] hover:text-white"
                 style={{
                   fontFamily: "BonaNova",
-                  color: "#5C5857",
-                  borderColor: "#EDB161",
+                  color: "#BB924D",
+                  borderColor: "#BB924D",
+                  textTransform: "uppercase",
                   borderWidth: "1px",
                   backgroundColor: "transparent",
+                  letterSpacing: "0.05em",
                 }}
               >
-                DOWNLOAD FLOOR PLANS
+                EXPLORE THE EXPANSE
               </a>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Section 5: Plug & Play at The Boulevard */}
@@ -385,66 +420,14 @@ const Retail = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {/* Left Column - Text Block */}
-          <div className="lg:col-span-4 space-y-4 sm:space-y-6 mb-6 sm:mb-0">
-            <motion.p
-              className="text-xs sm:text-sm uppercase tracking-wider text-center lg:text-left"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              style={{
-                fontFamily: "ChivoMono",
-                color: "#666666",
-                letterSpacing: "0.1em",
-              }}
-            >
-              A GLIMPSE INTO THE INSPIRED WORLD
-            </motion.p>
-            <motion.h2
-              className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3vw] font-bold leading-tight text-center lg:text-left"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              style={{
-                fontFamily: '"BonaNova", serif',
-                color: "#0211A2",
-                letterSpacing: "0.02em",
-                textTransform: "uppercase",
-              }}
-            >
-              PLUG & PLAY AT THE BOULEVARD
-            </motion.h2>
-            <motion.p
-              className="text-sm sm:text-base lg:text-lg leading-relaxed text-center lg:text-left"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              style={{
-                fontFamily: "BonaNova",
-                color: "#5C5857",
-                letterSpacing: "0.02em",
-              }}
-            >
-              At Regalium, every element becomes a fractal unit aligned to a
-              larger intention: creating a future we wish to live in. Growth is
-              no longer only upward or cyclical, but outward, expansive, and
-              multiplicative, mirroring the evolution of cities, communities,
-              and shared visions.
-            </motion.p>
-          </div>
-
-          {/* Right Columns - Two Images */}
-          <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
-            {/* Middle Image - Luxury Storefronts */}
+          {/* Left Column - Image */}
+          <div className="lg:col-span-5 mb-6 sm:mb-0">
             <motion.div
-              className="w-full h-[250px] sm:h-[500px] relative overflow-hidden"
-              initial={{ opacity: 0, x: 30 }}
+              className="w-full h-[300px] sm:h-[600px] relative overflow-hidden"
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
               <div
                 className="w-full h-full"
@@ -455,14 +438,69 @@ const Retail = () => {
                 }}
               />
             </motion.div>
+          </div>
 
-            {/* Right Image - Outdoor Seating Area */}
+          {/* Right Column - Text Block and Image */}
+          <div className="lg:col-span-7 space-y-8 sm:space-y-12">
+            {/* Text Block */}
+            <div className="space-y-4 sm:space-y-6">
+              <motion.p
+                className="text-xs sm:text-sm uppercase tracking-wider"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                style={{
+                  fontFamily: "ChivoMono",
+                  color: "#666666",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                A GLIMPSE INTO THE INSPIRED WORLD
+              </motion.p>
+              <motion.h2
+                className="text-2xl sm:text-3xl lg:text-4xl xl:text-[2.5vw] font-bold leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                style={{
+                  fontFamily: "BonaNova",
+                  color: "#0211A2",
+                  letterSpacing: "0.02em",
+                  fontWeight: "400",
+                  textTransform: "uppercase",
+                }}
+              >
+                PUSHING THE BOUNDARIES <br /> OF INDIAN RETAIL
+              </motion.h2>
+              <motion.p
+                className="text-sm sm:text-base lg:text-lg leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                style={{
+                  fontFamily: "BonaNova",
+                  color: "#5C5857",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Through innovation in retail tech, Regalium will focus on hyper
+                personalisation, easy provenance verification for limited
+                edition products, and provide expert consulting on several
+                fronts such as styling, buying, tax planning, seamless payment
+                options and more.
+              </motion.p>
+            </div>
+
+            {/* Bottom Image */}
             <motion.div
-              className="w-full h-[250px] sm:h-[500px] relative overflow-hidden"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className="w-full h-[250px] sm:h-[400px] relative overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.6 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
             >
               <div
                 className="w-full h-full"
@@ -518,24 +556,23 @@ const Retail = () => {
                 letterSpacing: "0.1em",
               }}
             >
-              A GLIMPSE INTO THE INSPIRED WORLD
+              IMMERSIVE JOURNEYS FOR BRANDS & BUYERS
             </motion.p>
             <motion.h2
-              className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold leading-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
               style={{
-                fontFamily: '"BonaNova", serif',
+                fontFamily: "BonaNova",
                 color: "#0211A2",
+                fontWeight: "400",
                 letterSpacing: "0.02em",
                 textTransform: "uppercase",
               }}
             >
-              LOCK IN AN EXPERIENCE
-              <br />
-              YOU'LL REMEMBER
+              AN INVITATION TO <br /> REFINED RETAIL
             </motion.h2>
             <motion.p
               className="text-sm sm:text-base lg:text-lg leading-relaxed max-w-lg"
@@ -549,9 +586,11 @@ const Retail = () => {
                 letterSpacing: "0.02em",
               }}
             >
-              The Epicurean and the Terrace act as incubators for the next wave
-              of culinary creativity, where exploration, experimentation, and
-              connection are constantly redefined.
+              Regalium's luxury retail environments redefine how one engages
+              with brands — where discovery, craftsmanship, and personalised
+              service converge. Each encounter is thoughtfully curated,
+              transforming shopping into an immersive, memorable experience
+              shaped by design, detail, and discretion.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -563,15 +602,16 @@ const Retail = () => {
                 href=""
                 className="inline-block px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-sm sm:text-base font-medium transition-all uppercase"
                 style={{
-                  fontFamily: "ChivoMono",
-                  color: "#999999",
-                  borderColor: "#EDB161",
+                  fontFamily: "BonaNova",
+                  color: "#BB924D",
+                  borderColor: "#BB924D",
                   borderWidth: "1px",
                   backgroundColor: "transparent",
                   letterSpacing: "0.05em",
+                  textTransform: "uppercase",
                 }}
               >
-                EXPLORE THE NEXT-GEN OFFICE SPACES
+                JOIN THE FUTURE OF RETAIL
               </a>
             </motion.div>
           </div>
