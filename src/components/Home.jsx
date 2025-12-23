@@ -615,41 +615,43 @@ const Home = () => {
     };
     window.addEventListener("resize", handleResize);
 
-    // Track if section is pinned
+    // Track if section is pinned (desktop only)
     let isPinned = false;
 
-    // Animation loop with smooth lerp and snap
+    // Animation loop with smooth lerp and snap (desktop only)
     const animate = () => {
       const now = typeof window !== "undefined" ? Date.now() : 0;
 
-      // Clamp targetY to valid range
       const minY = -(sectionCount - 1) * state.sectionHeight;
       const maxY = 0;
+
+      // Clamp targetY to valid range
       state.targetY = Math.max(minY, Math.min(maxY, state.targetY));
 
-      // Snap to nearest section when not dragging and scroll has stopped
-      // Match reference: 100ms delay and 1px threshold
-      if (
-        isPinned &&
-        !state.isSnapping &&
-        !state.isDragging &&
-        now - state.lastScrollTime > 100
-      ) {
-        let targetIndex = Math.round(-state.targetY / state.sectionHeight);
-        targetIndex = Math.max(0, Math.min(sectionCount - 1, targetIndex));
-        const snapPoint = -targetIndex * state.sectionHeight;
-        // Match reference: snap if more than 1px away
-        if (Math.abs(state.targetY - snapPoint) > 1) snapToSection();
-      }
+      if (!isMobile()) {
+        // Desktop: keep snap / lerp behavior
+        if (
+          isPinned &&
+          !state.isSnapping &&
+          !state.isDragging &&
+          now - state.lastScrollTime > 100
+        ) {
+          let targetIndex = Math.round(-state.targetY / state.sectionHeight);
+          targetIndex = Math.max(0, Math.min(sectionCount - 1, targetIndex));
+          const snapPoint = -targetIndex * state.sectionHeight;
+          if (Math.abs(state.targetY - snapPoint) > 1) snapToSection();
+        }
 
-      // Update snap animation
-      if (state.isSnapping) updateSnap();
+        if (state.isSnapping) updateSnap();
 
-      // Smooth lerp for currentY (original smoothness)
-      if (!state.isDragging) {
-        state.currentY += (state.targetY - state.currentY) * config.LERP_FACTOR;
-        // Clamp currentY as well
-        state.currentY = Math.max(minY, Math.min(maxY, state.currentY));
+        if (!state.isDragging) {
+          state.currentY +=
+            (state.targetY - state.currentY) * config.LERP_FACTOR;
+          state.currentY = Math.max(minY, Math.min(maxY, state.currentY));
+        }
+      } else {
+        // Mobile: targetY is driven directly by ScrollTrigger (simple scrub)
+        state.currentY = Math.max(minY, Math.min(maxY, state.targetY));
       }
 
       // Update active index
@@ -664,80 +666,15 @@ const Home = () => {
       }
 
       syncElements();
-
-      // Ensure all minimap elements have consistent height
-      // Update periodically to catch any elements created by syncElements
-      const mobile = isMobile();
-      if (state.minimapHeight > 0 && !mobile) {
-        // Update minimap-img-preview height (desktop only)
-        const minimapPreview = container.querySelector(".minimap-img-preview");
-        if (
-          minimapPreview &&
-          minimapPreview.style.height !== `${state.minimapHeight}px`
-        ) {
-          minimapPreview.style.height = `${state.minimapHeight}px`;
-        }
-
-        // Update all minimap-img-item heights and ensure images are properly styled
-        // Use exact same height value for all to prevent gaps (desktop only)
-        const exactHeight = `${state.minimapHeight}px`;
-        state.minimapElements.forEach((item) => {
-          // Force exact height
-          item.el.style.height = exactHeight;
-          item.el.style.margin = "0";
-          item.el.style.padding = "0";
-
-          // Ensure img element has correct styles
-          const img = item.el.querySelector("img");
-          if (img) {
-            img.style.width = "100%";
-            img.style.height = "100%";
-            img.style.objectFit = "cover";
-            img.style.display = "block";
-            img.style.margin = "0";
-            img.style.padding = "0";
-          }
-        });
-      } else if (mobile) {
-        // On mobile, ensure images have consistent height and proper styling
-        const minimapPreview = container.querySelector(".minimap-img-preview");
-        if (minimapPreview) {
-          const previewHeight = minimapPreview.offsetHeight;
-          if (previewHeight > 0) {
-            // Update state.minimapHeight for consistency
-            state.minimapHeight = previewHeight;
-
-            state.minimapElements.forEach((item) => {
-              // Force exact same height for all images - no exceptions
-              const exactHeight = `${previewHeight}px`;
-              item.el.style.height = exactHeight;
-              item.el.style.minHeight = exactHeight;
-              item.el.style.maxHeight = exactHeight;
-              item.el.style.margin = "0";
-              item.el.style.padding = "0";
-              item.el.style.top = "0";
-              item.el.style.left = "0";
-
-              const img = item.el.querySelector("img");
-              if (img) {
-                img.style.width = "100%";
-                img.style.height = "100%";
-                img.style.objectFit = "cover";
-                img.style.display = "block";
-                img.style.margin = "0";
-                img.style.padding = "0";
-              }
-            });
-          }
-        }
-      }
-
       updatePositions();
-      requestAnimationFrame(animate);
+
+      if (!isMobile()) {
+        requestAnimationFrame(animate);
+      }
     };
 
-    // Start animation loop
-    const animationId = requestAnimationFrame(animate);
+    // Start animation loop only on desktop
+    const animationId = !isMobile() ? requestAnimationFrame(animate) : null;
 
     // Wheel event handler for smooth scrolling
     const handleWheel = (e) => {
@@ -794,8 +731,7 @@ const Home = () => {
       const minY = -(sectionCount - 1) * state.sectionHeight;
       const maxY = 0;
 
-      const nextTargetY =
-        state.dragStart.scrollY + touchDelta * 1.5;
+      const nextTargetY = state.dragStart.scrollY + touchDelta * 1.5;
 
       const isAtFirstSection = state.targetY >= maxY - 5;
       const isAtLastSection = state.targetY <= minY + 5;
