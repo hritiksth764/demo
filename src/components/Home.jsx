@@ -787,15 +787,37 @@ const Home = () => {
 
     const handleTouchMove = (e) => {
       if (!state.isDragging || !isPinned) return;
-      state.targetY =
-        state.dragStart.scrollY +
-        (e.touches[0].clientY - state.dragStart.y) * 1.5;
+
+      const touchDelta = e.touches[0].clientY - state.dragStart.y;
 
       // Clamp targetY to valid range
       const minY = -(sectionCount - 1) * state.sectionHeight;
       const maxY = 0;
-      state.targetY = Math.max(minY, Math.min(maxY, state.targetY));
 
+      const nextTargetY =
+        state.dragStart.scrollY + touchDelta * 1.5;
+
+      const isAtFirstSection = state.targetY >= maxY - 5;
+      const isAtLastSection = state.targetY <= minY + 5;
+      const draggingDown = touchDelta > 0; // finger moving down, content should move up
+      const draggingUp = touchDelta < 0;
+
+      // If at first section and dragging down (trying to go up the page),
+      // or at last section and dragging up (trying to go down the page),
+      // allow normal page scroll by NOT preventing default and NOT updating target.
+      if (
+        (isAtFirstSection && draggingDown) ||
+        (isAtLastSection && draggingUp)
+      ) {
+        return;
+      }
+
+      // We control the scroll inside the pinned section
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      state.targetY = Math.max(minY, Math.min(maxY, nextTargetY));
       state.lastScrollTime = typeof window !== "undefined" ? Date.now() : 0;
     };
 
@@ -815,8 +837,12 @@ const Home = () => {
       onEnter: () => {
         isPinned = true;
         window.addEventListener("wheel", handleWheel, { passive: false });
-        window.addEventListener("touchstart", handleTouchStart);
-        window.addEventListener("touchmove", handleTouchMove);
+        window.addEventListener("touchstart", handleTouchStart, {
+          passive: false,
+        });
+        window.addEventListener("touchmove", handleTouchMove, {
+          passive: false,
+        });
         window.addEventListener("touchend", handleTouchEnd);
       },
       onLeave: () => {
@@ -829,8 +855,12 @@ const Home = () => {
       onEnterBack: () => {
         isPinned = true;
         window.addEventListener("wheel", handleWheel, { passive: false });
-        window.addEventListener("touchstart", handleTouchStart);
-        window.addEventListener("touchmove", handleTouchMove);
+        window.addEventListener("touchstart", handleTouchStart, {
+          passive: false,
+        });
+        window.addEventListener("touchmove", handleTouchMove, {
+          passive: false,
+        });
         window.addEventListener("touchend", handleTouchEnd);
       },
       onLeaveBack: () => {
