@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useTransform } from "framer-motion";
 import { gsap, ScrollTrigger } from "gsap/all";
 import imagePNG from "../assets/herohome.png";
@@ -102,94 +103,768 @@ const Home = () => {
   const interactiveSections = [
     {
       title: "BOULEVARD",
-      metadata: "5,000 SQ. FT OUTDOOR SPACE",
+      metadata: "",
       description:
         "The Boulevard is a fluid open-air environment where lush landscapes, modular design, and refined infrastructure converge — extending Regalium's interiors into a versatile setting for pop-ups, performances, exhibitions, launches, and cultural moments within Bengaluru's urban fabric.",
       image: boulevard1,
     },
     {
       title: "TERRACE",
-      metadata: "ELEVATED SANCTUARY",
+      metadata: "",
       description:
         "An elevated sanctuary overlooking Bengaluru, the Terrace brings together wellness gardens, flexible leisure zones, an amphitheatre, and a striking edge pool — offering a versatile environment for networking, restoration, and thoughtfully curated experiences.",
       image: boulevard2,
     },
     {
       title: "LUXURY RETAIL",
-      metadata: "GLOBALLY RENOWNED BRANDS",
+      metadata: "",
       description:
         "A new expression of luxury retail, this space brings together globally renowned brands, thoughtful curation, and impeccable service — enhanced by technology to offer members a refined, intuitive, and deeply personalised shopping journey.",
       image: retailHero,
     },
     {
       title: "OFFICE SPACE",
-      metadata: "FUTURE-FORWARD TECHNOLOGY",
+      metadata: "",
       description:
         "Enabled by future-forward technology, Regalium's office spaces offer a range of flexible formats and tenancy options — complemented by shared community environments designed to encourage collaboration, connection, and meaningful professional exchange.",
       image: officeHero,
     },
     {
       title: "EXECUTIVE EDUCATION",
-      metadata: "GLOBAL LEADERSHIP SPACE",
+      metadata: "",
       description:
         "A pinnacle space for global executive leadership, this future-forward education environment combines advanced technology, immersive learning, and curated networking to equip leaders with the insight, tools, and perspective to drive meaningful, large-scale impact.",
       image: officeDetails,
     },
     {
       title: "GALLERY",
-      metadata: "LIVING CULTURAL STAGE",
+      metadata: "",
       description:
         "A light-filled, double-height gallery conceived as a living cultural stage — combining refined spatial design with immersive audiovisual and digital technologies to host evolving exhibitions, performances, and future-facing art experiences that expand creative possibility.",
       image: communityHero,
     },
   ];
 
-  // Interactive scroll section ref
+  // Interactive scroll section refs
   const interactiveSectionRef = useRef(null);
+  const backgroundLayerRef = useRef(null);
+  const minimapRef = useRef(null);
+  const titleLayerRef = useRef(null);
+  const textLayerRef = useRef(null);
 
-  // Total cards in interactive section
+  // Parallax scroll configuration
+  const config = {
+    SCROLL_SPEED: 0.75, // Match reference
+    LERP_FACTOR: 0.05,
+    BUFFER_SIZE: 5,
+    MAX_VELOCITY: 150, // Match reference
+    SNAP_DURATION: 500,
+    PARALLAX_FACTOR: 0.2,
+  };
+
+  // Total sections
   const sectionCount = interactiveSections.length;
 
-  // Use state + ref to track current section
+  // Active index state and ref (used internally for tracking)
+  // eslint-disable-next-line no-unused-vars
   const [activeIndex, setActiveIndex] = useState(0);
   const activeIndexRef = useRef(0);
 
-  // GSAP ScrollTrigger to pin the section and scrub through cards
+  // State for parallax scrolling
+  const stateRef = useRef({
+    currentY: 0,
+    targetY: 0,
+    isDragging: false,
+    isSnapping: false,
+    snapStart: { time: 0, y: 0, target: 0 },
+    lastScrollTime: 0,
+    sectionHeight: typeof window !== "undefined" ? window.innerHeight : 1000,
+    minimapHeight: 350,
+    backgroundElements: new Map(),
+    minimapElements: new Map(),
+    titleElements: new Map(),
+    textElements: new Map(),
+  });
+
+  // Lerp function for smooth transitions
+  const lerp = (start, end, factor) => start + (end - start) * factor;
+
+  // Get section data with infinite loop
+  const getSectionData = (index) => {
+    const i = ((Math.abs(index) % sectionCount) + sectionCount) % sectionCount;
+    return interactiveSections[i];
+  };
+
+  // Create parallax effect for images
+  const createParallax = (img, height) => {
+    let current = 0;
+    return {
+      update: (scroll, index) => {
+        const target = (-scroll - index * height) * config.PARALLAX_FACTOR;
+        current = lerp(current, target, 0.1);
+        if (Math.abs(current - target) > 0.01) {
+          img.style.transform = `translateY(${current}px) scale(1.5)`;
+        }
+      },
+    };
+  };
+
+  // Helper to detect mobile
+  const isMobile = () => {
+    return typeof window !== "undefined" && window.innerWidth <= 1000;
+  };
+
+  // Create elements for background, minimap, title, and text
+  const createElement = (index, type) => {
+    const state = stateRef.current;
+    const maps = {
+      background: state.backgroundElements,
+      minimap: state.minimapElements,
+      title: state.titleElements,
+      text: state.textElements,
+    };
+    if (maps[type] && maps[type].has(index)) return;
+
+    const data = getSectionData(index);
+    const container = interactiveSectionRef.current;
+    if (!container) return;
+
+    if (type === "background") {
+      const el = document.createElement("div");
+      el.className = "project";
+      const img = document.createElement("img");
+      img.src = data.image;
+      img.alt = data.title;
+      el.appendChild(img);
+      if (backgroundLayerRef.current) {
+        backgroundLayerRef.current.appendChild(el);
+      }
+      state.backgroundElements.set(index, {
+        el,
+        parallax: createParallax(img, state.sectionHeight),
+      });
+    } else if (type === "minimap") {
+      const el = document.createElement("div");
+      el.className = "minimap-img-item";
+
+      // Calculate correct height based on mobile/desktop
+      const mobile = isMobile();
+      let height = state.minimapHeight || 350;
+
+      // On mobile, try to get actual preview height
+      if (mobile && minimapRef.current) {
+        const previewContainer = minimapRef.current.closest(
+          ".minimap-img-preview"
+        );
+        if (previewContainer) {
+          const computedHeight = previewContainer.offsetHeight;
+          if (computedHeight > 0) {
+            height = computedHeight;
+          }
+        }
+      }
+
+      // Set explicit styles to prevent any spacing
+      el.style.cssText = `
+        position: absolute;
+        width: 100%;
+        height: ${height}px;
+        min-height: ${height}px;
+        max-height: ${height}px;
+        will-change: transform;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 0;
+      `;
+
+      const img = document.createElement("img");
+      img.src = data.image;
+      img.alt = data.title;
+      // Explicitly set image dimensions to fill container
+      img.style.cssText = `
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        margin: 0;
+        padding: 0;
+      `;
+      el.appendChild(img);
+
+      if (minimapRef.current) {
+        minimapRef.current.appendChild(el);
+      }
+
+      state.minimapElements.set(index, {
+        el,
+        parallax: createParallax(img, height),
+      });
+    } else if (type === "title") {
+      const el = document.createElement("div");
+      el.className = "minimap-item-info";
+      const mobile = isMobile();
+      el.style.cssText = mobile
+        ? `
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        visibility: visible;
+        opacity: 1;
+      `
+        : `
+        position: absolute;
+        width: 32%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0.5rem;
+        left: 0;
+        right: auto;
+        overflow: hidden;
+      `;
+      const num = (
+        (((Math.abs(index) % sectionCount) + sectionCount) % sectionCount) +
+        1
+      )
+        .toString()
+        .padStart(2, "0");
+      el.innerHTML = `
+        <div class="minimap-item-info-row">
+          <p>${num}</p>
+          <p>${data.title}</p>
+        </div>
+        <div class="minimap-item-info-row">
+          <p>${data.metadata}</p>
+          <p>2024</p>
+        </div>
+      `;
+      if (titleLayerRef.current) {
+        titleLayerRef.current.appendChild(el);
+      }
+      state.titleElements.set(index, { el });
+    } else if (type === "metadata") {
+      // Metadata is now part of the title/info structure
+      // This type is kept for compatibility but not used
+      return;
+    } else {
+      // text type - description text (positioned on right side)
+      const el = document.createElement("div");
+      el.className = "minimap-item-info minimap-description";
+      const mobile = isMobile();
+      el.style.cssText = mobile
+        ? `
+        position: relative;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        padding: 0.5rem;
+        right: 0;
+        overflow: hidden;
+      `
+        : `
+        position: absolute;
+        width: 32%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+        padding: 0.5rem;
+        right: 0;
+        overflow: hidden;
+      `;
+      el.innerHTML = `
+        <p style="font-family: BonaNova; font-size: clamp(0.875rem, 1.125vw, 1.125rem); line-height: 1.75; max-width: 100%; color: #333333; letter-spacing: 0.01em; margin: 0; text-align: ${
+          mobile ? "left" : "right"
+        }; text-transform: none; font-weight: 400; word-wrap: break-word; overflow-wrap: break-word;">
+          ${data.description}
+        </p>
+      `;
+      if (textLayerRef.current) {
+        textLayerRef.current.appendChild(el);
+      }
+      state.textElements.set(index, { el });
+    }
+  };
+
+  // Sync elements based on current scroll position
+  const syncElements = () => {
+    const state = stateRef.current;
+    let current = Math.round(-state.targetY / state.sectionHeight);
+
+    // Clamp current to valid range
+    current = Math.max(0, Math.min(sectionCount - 1, current));
+
+    const min = Math.max(0, current - config.BUFFER_SIZE);
+    const max = Math.min(sectionCount - 1, current + config.BUFFER_SIZE);
+
+    for (let i = min; i <= max; i++) {
+      createElement(i, "background");
+      createElement(i, "minimap");
+      createElement(i, "title");
+      createElement(i, "text");
+    }
+
+    [
+      state.backgroundElements,
+      state.minimapElements,
+      state.titleElements,
+      state.textElements,
+    ].forEach((map) => {
+      map.forEach((item, index) => {
+        if (index < min || index > max) {
+          item.el.remove();
+          map.delete(index);
+        }
+      });
+    });
+  };
+
+  // Snap to nearest section - match reference calculation
+  const snapToSection = () => {
+    const state = stateRef.current;
+    state.isSnapping = true;
+    state.snapStart.time = typeof window !== "undefined" ? Date.now() : 0;
+    state.snapStart.y = state.targetY;
+
+    // Match reference: simple calculation, then clamp result
+    let targetIndex = Math.round(-state.targetY / state.sectionHeight);
+    targetIndex = Math.max(0, Math.min(sectionCount - 1, targetIndex));
+    state.snapStart.target = -targetIndex * state.sectionHeight;
+  };
+
+  // Update snap animation
+  const updateSnap = () => {
+    const state = stateRef.current;
+    const now = typeof window !== "undefined" ? Date.now() : 0;
+    const progress = Math.min(
+      (now - state.snapStart.time) / config.SNAP_DURATION,
+      1
+    );
+    const eased = 1 - Math.pow(1 - progress, 3);
+    state.targetY =
+      state.snapStart.y + (state.snapStart.target - state.snapStart.y) * eased;
+
+    // Clamp targetY to valid range
+    const minY = -(sectionCount - 1) * state.sectionHeight;
+    const maxY = 0;
+    state.targetY = Math.max(minY, Math.min(maxY, state.targetY));
+
+    if (progress >= 1) state.isSnapping = false;
+  };
+
+  // Update positions of all elements
+  const updatePositions = () => {
+    const state = stateRef.current;
+    const mobile = isMobile();
+    const container = interactiveSectionRef.current;
+
+    // Get actual height for calculation
+    let actualHeight = state.minimapHeight;
+    if (mobile && container) {
+      const minimapPreview = container.querySelector(".minimap-img-preview");
+      if (minimapPreview) {
+        const previewHeight = minimapPreview.offsetHeight;
+        if (previewHeight > 0) {
+          actualHeight = previewHeight;
+        }
+      }
+    }
+
+    const minimapY = (state.currentY * actualHeight) / state.sectionHeight;
+
+    // Update background elements
+    state.backgroundElements.forEach((item, index) => {
+      const y = index * state.sectionHeight + state.currentY;
+      item.el.style.transform = `translateY(${y}px)`;
+      item.parallax.update(state.currentY, index);
+    });
+
+    // Update minimap elements
+    // actualHeight already calculated above
+
+    state.minimapElements.forEach((item, index) => {
+      // Calculate exact position - ensure no gaps by using precise calculation
+      const y = Math.round(index * actualHeight + minimapY);
+      item.el.style.transform = `translateY(${y}px)`;
+
+      // Force exact same height for all elements - critical for consistency
+      const exactHeight = `${actualHeight}px`;
+      item.el.style.height = exactHeight;
+      item.el.style.minHeight = exactHeight;
+      item.el.style.maxHeight = exactHeight;
+      item.el.style.margin = "0";
+      item.el.style.padding = "0";
+
+      item.parallax.update(minimapY, index);
+    });
+
+    // Update title elements (left side)
+    state.titleElements.forEach((item, index) => {
+      // Calculate position - use actualHeight for consistency
+      const y = index * actualHeight + minimapY;
+      item.el.style.transform = `translateY(${y}px)`;
+
+      if (mobile) {
+        // On mobile, ensure visibility and absolute positioning
+        item.el.style.position = "absolute";
+        item.el.style.top = "0";
+        item.el.style.left = "0";
+        item.el.style.right = "0";
+        item.el.style.visibility = "visible";
+        item.el.style.opacity = "1";
+        item.el.style.display = "flex";
+      } else {
+        item.el.style.left = "0";
+        item.el.style.right = "auto";
+      }
+    });
+
+    // Update text elements (right side) - hide on mobile
+    state.textElements.forEach((item, index) => {
+      if (mobile) {
+        // Hide description on mobile
+        item.el.style.display = "none";
+      } else {
+        const y = index * state.minimapHeight + minimapY;
+        item.el.style.transform = `translateY(${y}px)`;
+        item.el.style.left = "auto";
+        item.el.style.right = "0";
+      }
+    });
+  };
+
+  // Initialize parallax scrolling with ScrollTrigger
   useEffect(() => {
-    if (!interactiveSectionRef.current) return;
+    const container = interactiveSectionRef.current;
+    if (!container) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const sectionEl = interactiveSectionRef.current;
+    const state = stateRef.current;
 
-    const st = ScrollTrigger.create({
-      trigger: sectionEl,
+    // Calculate minimapHeight from actual container
+    const updateMinimapHeight = () => {
+      const minimapContainer = container.querySelector(".minimap");
+      if (minimapContainer) {
+        const computedStyle = window.getComputedStyle(minimapContainer);
+        const totalHeight = minimapContainer.offsetHeight;
+        const paddingTop = parseFloat(computedStyle.paddingTop);
+        const paddingBottom = parseFloat(computedStyle.paddingBottom);
+        state.minimapHeight = totalHeight - paddingTop - paddingBottom;
+
+        const mobile = isMobile();
+        const minimapPreview = minimapContainer.querySelector(
+          ".minimap-img-preview"
+        );
+        if (minimapPreview) {
+          if (mobile) {
+            // On mobile, use fixed height from CSS
+            minimapPreview.style.height = "";
+          } else {
+            minimapPreview.style.height = `${state.minimapHeight}px`;
+          }
+        }
+
+        // Explicitly set height on all minimap-img-item elements to ensure consistency
+        state.minimapElements.forEach((item) => {
+          if (mobile) {
+            // On mobile, let CSS handle the height
+            item.el.style.height = "";
+          } else {
+            item.el.style.height = `${state.minimapHeight}px`;
+          }
+        });
+      }
+    };
+
+    // Initialize elements
+    for (let i = 0; i < sectionCount; i++) {
+      createElement(i, "background");
+      createElement(i, "minimap");
+      createElement(i, "title");
+      createElement(i, "text");
+    }
+
+    // Initialize minimap height after elements are created
+    // Use requestAnimationFrame to ensure DOM is fully rendered
+    requestAnimationFrame(() => {
+      updateMinimapHeight();
+    });
+
+    // Handle window resize
+    const handleResize = () => {
+      state.sectionHeight = window.innerHeight;
+      updateMinimapHeight();
+      ScrollTrigger.refresh();
+    };
+    window.addEventListener("resize", handleResize);
+
+    // Track if section is pinned
+    let isPinned = false;
+
+    // Animation loop with smooth lerp and snap
+    const animate = () => {
+      const now = typeof window !== "undefined" ? Date.now() : 0;
+
+      // Clamp targetY to valid range
+      const minY = -(sectionCount - 1) * state.sectionHeight;
+      const maxY = 0;
+      state.targetY = Math.max(minY, Math.min(maxY, state.targetY));
+
+      // Snap to nearest section when not dragging and scroll has stopped
+      // Match reference: 100ms delay and 1px threshold
+      if (
+        isPinned &&
+        !state.isSnapping &&
+        !state.isDragging &&
+        now - state.lastScrollTime > 100
+      ) {
+        let targetIndex = Math.round(-state.targetY / state.sectionHeight);
+        targetIndex = Math.max(0, Math.min(sectionCount - 1, targetIndex));
+        const snapPoint = -targetIndex * state.sectionHeight;
+        // Match reference: snap if more than 1px away
+        if (Math.abs(state.targetY - snapPoint) > 1) snapToSection();
+      }
+
+      // Update snap animation
+      if (state.isSnapping) updateSnap();
+
+      // Smooth lerp for currentY (original smoothness)
+      if (!state.isDragging) {
+        state.currentY += (state.targetY - state.currentY) * config.LERP_FACTOR;
+        // Clamp currentY as well
+        state.currentY = Math.max(minY, Math.min(maxY, state.currentY));
+      }
+
+      // Update active index
+      const currentIndex = Math.round(-state.currentY / state.sectionHeight);
+      const clampedIndex = Math.max(
+        0,
+        Math.min(sectionCount - 1, currentIndex)
+      );
+      if (clampedIndex !== activeIndexRef.current) {
+        activeIndexRef.current = clampedIndex;
+        setActiveIndex(clampedIndex);
+      }
+
+      syncElements();
+
+      // Ensure all minimap elements have consistent height
+      // Update periodically to catch any elements created by syncElements
+      const mobile = isMobile();
+      if (state.minimapHeight > 0 && !mobile) {
+        // Update minimap-img-preview height (desktop only)
+        const minimapPreview = container.querySelector(".minimap-img-preview");
+        if (
+          minimapPreview &&
+          minimapPreview.style.height !== `${state.minimapHeight}px`
+        ) {
+          minimapPreview.style.height = `${state.minimapHeight}px`;
+        }
+
+        // Update all minimap-img-item heights and ensure images are properly styled
+        // Use exact same height value for all to prevent gaps (desktop only)
+        const exactHeight = `${state.minimapHeight}px`;
+        state.minimapElements.forEach((item) => {
+          // Force exact height
+          item.el.style.height = exactHeight;
+          item.el.style.margin = "0";
+          item.el.style.padding = "0";
+
+          // Ensure img element has correct styles
+          const img = item.el.querySelector("img");
+          if (img) {
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.objectFit = "cover";
+            img.style.display = "block";
+            img.style.margin = "0";
+            img.style.padding = "0";
+          }
+        });
+      } else if (mobile) {
+        // On mobile, ensure images have consistent height and proper styling
+        const minimapPreview = container.querySelector(".minimap-img-preview");
+        if (minimapPreview) {
+          const previewHeight = minimapPreview.offsetHeight;
+          if (previewHeight > 0) {
+            // Update state.minimapHeight for consistency
+            state.minimapHeight = previewHeight;
+
+            state.minimapElements.forEach((item) => {
+              // Force exact same height for all images - no exceptions
+              const exactHeight = `${previewHeight}px`;
+              item.el.style.height = exactHeight;
+              item.el.style.minHeight = exactHeight;
+              item.el.style.maxHeight = exactHeight;
+              item.el.style.margin = "0";
+              item.el.style.padding = "0";
+              item.el.style.top = "0";
+              item.el.style.left = "0";
+
+              const img = item.el.querySelector("img");
+              if (img) {
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "cover";
+                img.style.display = "block";
+                img.style.margin = "0";
+                img.style.padding = "0";
+              }
+            });
+          }
+        }
+      }
+
+      updatePositions();
+      requestAnimationFrame(animate);
+    };
+
+    // Start animation loop
+    const animationId = requestAnimationFrame(animate);
+
+    // Wheel event handler for smooth scrolling
+    const handleWheel = (e) => {
+      if (!isPinned) return;
+
+      // Calculate boundaries once
+      const minY = -(sectionCount - 1) * state.sectionHeight;
+      const maxY = 0;
+
+      // Check if we're at actual boundaries (check targetY position, not just section index)
+      const isAtFirstSection = state.targetY >= maxY - 5; // At or near first section
+      const isAtLastSection = state.targetY <= minY + 5; // At or near last section
+      const scrollingDown = e.deltaY > 0;
+      const scrollingUp = e.deltaY < 0;
+
+      // If at first section and scrolling up, or at last section and scrolling down, allow normal scroll
+      if (
+        (isAtFirstSection && scrollingUp) ||
+        (isAtLastSection && scrollingDown)
+      ) {
+        // Don't prevent default - allow normal page scroll to exit section
+        return;
+      }
+
+      // Simple wheel handler matching reference code exactly
+      e.preventDefault();
+      state.isSnapping = false;
+      state.lastScrollTime = typeof window !== "undefined" ? Date.now() : 0;
+      const delta = Math.max(
+        Math.min(e.deltaY * config.SCROLL_SPEED, config.MAX_VELOCITY),
+        -config.MAX_VELOCITY
+      );
+      state.targetY -= delta;
+
+      // Clamp targetY to prevent infinite scrolling beyond boundaries
+      state.targetY = Math.max(minY, Math.min(maxY, state.targetY));
+    };
+
+    // Touch event handlers
+    const handleTouchStart = (e) => {
+      if (!isPinned) return;
+      state.isDragging = true;
+      state.isSnapping = false;
+      state.dragStart = { y: e.touches[0].clientY, scrollY: state.targetY };
+      state.lastScrollTime = typeof window !== "undefined" ? Date.now() : 0;
+    };
+
+    const handleTouchMove = (e) => {
+      if (!state.isDragging || !isPinned) return;
+      state.targetY =
+        state.dragStart.scrollY +
+        (e.touches[0].clientY - state.dragStart.y) * 1.5;
+
+      // Clamp targetY to valid range
+      const minY = -(sectionCount - 1) * state.sectionHeight;
+      const maxY = 0;
+      state.targetY = Math.max(minY, Math.min(maxY, state.targetY));
+
+      state.lastScrollTime = typeof window !== "undefined" ? Date.now() : 0;
+    };
+
+    const handleTouchEnd = () => {
+      state.isDragging = false;
+    };
+
+    // Create ScrollTrigger to pin section (only for pinning, not scrubbing)
+    // End point: Reduced to allow easier exit from last slide
+    // We use (sectionCount - 1) * 80% to give enough space for slides but allow exit
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: container,
       start: "top top",
-      end: "+=400%",
-      scrub: 1,
+      end: `+=${(sectionCount - 1) * 80}%`, // Reduced from 100% to 80% for easier exit
       pin: true,
       anticipatePin: 1,
-      onUpdate: (self) => {
-        const progress = self.progress; // 0 -> 1
-        const idx = Math.min(
-          Math.floor(progress * sectionCount),
-          sectionCount - 1
-        );
-
-        if (idx !== activeIndexRef.current) {
-          activeIndexRef.current = idx;
-          setActiveIndex(idx);
-        }
+      onEnter: () => {
+        isPinned = true;
+        window.addEventListener("wheel", handleWheel, { passive: false });
+        window.addEventListener("touchstart", handleTouchStart);
+        window.addEventListener("touchmove", handleTouchMove);
+        window.addEventListener("touchend", handleTouchEnd);
+      },
+      onLeave: () => {
+        isPinned = false;
+        window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("touchend", handleTouchEnd);
+      },
+      onEnterBack: () => {
+        isPinned = true;
+        window.addEventListener("wheel", handleWheel, { passive: false });
+        window.addEventListener("touchstart", handleTouchStart);
+        window.addEventListener("touchmove", handleTouchMove);
+        window.addEventListener("touchend", handleTouchEnd);
+      },
+      onLeaveBack: () => {
+        isPinned = false;
+        window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("touchend", handleTouchEnd);
       },
     });
 
+    // Cleanup
     return () => {
-      st.kill();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+      cancelAnimationFrame(animationId);
+      scrollTrigger.kill();
       ScrollTrigger.update();
-    };
-  }, [sectionCount]);
 
-  const currentSection = interactiveSections[activeIndex];
+      // Clean up DOM elements
+      state.backgroundElements.forEach((item) => item.el.remove());
+      state.minimapElements.forEach((item) => item.el.remove());
+      state.titleElements.forEach((item) => item.el.remove());
+      state.textElements.forEach((item) => item.el.remove());
+      state.backgroundElements.clear();
+      state.minimapElements.clear();
+      state.titleElements.clear();
+      state.textElements.clear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sectionCount]);
 
   return (
     <div className="w-full">
@@ -554,101 +1229,33 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Section 3: Interactive Scroll Section */}
+      {/* Section 3: Interactive Scroll Section with Infinite Parallax */}
       <div
         ref={interactiveSectionRef}
-        className="w-full h-[100vh] sm:h-screen py-10 sm:py-32 px-8 sm:px-[10rem] flex items-center relative"
+        className="parallax-section-container"
         style={{ background: "#ECE8DC" }}
       >
-        {/* Content container that fills the viewport height */}
-        <div className="w-full h-full flex items-center">
-          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
-            {/* Left Side - Title Text */}
-            <motion.div
-              key={`title-${activeIndex}`}
-              className="lg:col-span-3 flex items-center justify-center lg:justify-start lg:items-end"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            >
-              <h1
-                className="text-[6vw] sm:text-[4vw] lg:text-[3vw] font-bold text-center lg:text-left mx-auto"
-                style={{
-                  fontFamily: '"BonaNova", serif',
-                  color: "#0101A2",
-                  letterSpacing: "0.01em",
-                  fontWeight: "400",
-                  textTransform: "uppercase",
-                }}
-              >
-                {currentSection.title}
-              </h1>
-            </motion.div>
+        {/* Background Layer - Parallax Images (project class) */}
+        {/* project-list container like in reference */}
+        <div
+          ref={backgroundLayerRef}
+          className="project-list absolute inset-0 w-full h-full pointer-events-none"
+          style={{ zIndex: 1 }}
+        />
 
-            {/* Center - Image with text above */}
-            <motion.div
-              key={`image-${activeIndex}`}
-              className="lg:col-span-6 w-full"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.05 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            >
-              {/* Metadata text above image */}
-              <motion.p
-                key={`metadata-${activeIndex}`}
-                className="text-sm sm:text-base mb-4 text-center lg:text-left"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{
-                  fontFamily: "BonaNova",
-                  color: "#BB924D",
-                  letterSpacing: "0.05em",
-                  textTransform: "uppercase",
-                }}
-              >
-                {currentSection.metadata}
-              </motion.p>
+        {/* Minimap - Fixed, Centered */}
+        <div className="minimap">
+          <div className="minimap-wrapper">
+            {/* Minimap Image Preview - Centered */}
+            <div ref={minimapRef} className="minimap-img-preview" />
 
-              {/* Image */}
-              <motion.div
-                key={`img-${activeIndex}`}
-                className="w-full h-[400px] sm:h-[500px] lg:h-[600px]  overflow-hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                style={{
-                  backgroundImage: `url(${currentSection.image})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-            </motion.div>
-
-            {/* Right Side - Paragraph Text */}
-            <motion.div
-              key={`text-${activeIndex}`}
-              className="lg:col-span-3 flex items-start justify-center lg:justify-start"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            >
-              <p
-                className="text-sm sm:text-base lg:text-lg leading-relaxed max-w-md text-center lg:text-left"
-                style={{
-                  fontFamily: "BonaNova",
-                  color: "#333333",
-                  letterSpacing: "0.01em",
-                }}
-              >
-                {currentSection.description}
-              </p>
-            </motion.div>
+            {/* Minimap Info List - Text Content */}
+            <div className="minimap-info-list">
+              {/* Left Side - Title/Info */}
+              <div ref={titleLayerRef} />
+              {/* Right Side - Description Text */}
+              <div ref={textLayerRef} />
+            </div>
           </div>
         </div>
       </div>

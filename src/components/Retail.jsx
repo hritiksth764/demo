@@ -416,7 +416,7 @@ const Retail = () => {
 
       {/* Section 5: Plug & Play at The Boulevard */}
       <div
-        className="w-full min-h-[100vh] sm:h-[100vh] py-8 sm:py-24 px-8 sm:px-[10rem] flex items-center"
+        className="w-full min-h-[100vh] sm:h-[100vh] pt-14 sm:pt-24 pb-14 sm:pb-24 px-8 sm:px-[10rem] flex items-center"
         style={{ background: "#ECE8DC" }}
       >
         <motion.div
