@@ -207,13 +207,13 @@ const About = () => {
               transition={{ duration: 0.5 }}
             >
               <h3
-                className="text-2xl sm:text-[1vw] mb-[0.2vw] "
+                className="text-2xl sm:text-[0.8vw] mb-[1vw] "
                 style={{
                   fontFamily: '"ChivoMono", serif',
                   fontWeight: "400",
                   textTransform: "uppercase",
                   color: "#BB924D",
-                  letterSpacing: "0.01em",
+                  letterSpacing: "0.03em",
                 }}
               >
                 {activeItem.title}

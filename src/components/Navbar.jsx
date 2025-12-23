@@ -20,9 +20,15 @@ const Navbar = () => {
   const [activeMenuItem, setActiveMenuItem] = useState(null);
   const [isPastHero, setIsPastHero] = useState(false);
 
-  const navBackgroundStyle = {
-    background: "rgba(0, 0, 0, 0.001)",
-    backdropFilter: "blur(5px)",
+  // Navbar backgrounds
+  const navBackgroundClosed = {
+    background: "rgba(0, 0, 0, 0)",
+    backdropFilter: "blur(0px)",
+  };
+
+  const navBackgroundOpen = {
+    background: "rgba(0, 0, 0, 0)",
+    backdropFilter: "blur(20px)",
   };
 
   // Hide navbar after scrolling past hero section
@@ -102,6 +108,10 @@ const Navbar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMenuOpen, location.pathname]);
 
+  const currentBackground = isMenuOpen
+    ? navBackgroundOpen
+    : navBackgroundClosed;
+
   return (
     <div
       className={`fixed inset-x-0 top-0 z-[9999] transform transition-[transform,opacity] duration-[900ms] ease-[cubic-bezier(.19,1,.22,1)] ${
@@ -109,11 +119,9 @@ const Navbar = () => {
           ? "-translate-y-full opacity-0"
           : "translate-y-0 opacity-100"
       }`}
+      style={currentBackground}
     >
-      <nav
-        className="text-white flex items-center justify-between px-4 sm:px-[9rem] py-3"
-        style={navBackgroundStyle}
-      >
+      <nav className="text-white flex items-center justify-between px-4 sm:px-[9rem] py-3">
         <a
           href="/"
           onClick={(e) => {
@@ -182,105 +190,109 @@ const Navbar = () => {
 
       {/* Overlay Menu (appears below navbar, keeps navbar visible, full viewport height) */}
       <div
-        className={`w-full text-white border-t border-white/10 overflow-hidden origin-top transform transition-opacity duration-[900ms] ease-[cubic-bezier(.19,1,.22,1)] ${
+        className={`w-full text-white overflow-hidden origin-top transform transition-opacity duration-[900ms] ease-[cubic-bezier(.19,1,.22,1)] ${
           isMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
         style={{
-          ...navBackgroundStyle,
           minHeight: "100vh",
-          borderColor: "#EDB161",
         }}
       >
-        <div className="px-8 sm:px-[9rem] py-16 grid gap-10 sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-          <div className="space-y-10">
-            <div className="flex flex-col gap-3">
-              {menuItems.map((item, index) => {
-                const delay = 150 + index * 80;
-                const isActive = activeMenuItem === item.label;
-                const hasSub = !!subNavItems[item.label];
-                return (
-                  <button
-                    key={index}
-                    type="button"
-                    onClick={(e) => {
-                      if (hasSub) {
-                        e.preventDefault();
-                        setActiveMenuItem(item.label);
-                      } else {
-                        handleMenuItemClick(e, item.path);
-                      }
-                    }}
-                    className={`cursor-pointer text-left text-lg sm:text-[3vw] uppercase tracking-[0.18em] transition-all duration-700 ease-[cubic-bezier(.19,1,.22,1)] hover:text-[#EDB161] ${
-                      isMenuOpen
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-3"
-                    } ${isActive ? "" : ""}`}
-                    style={{
-                      fontWeight: "400",
-                      fontFamily: "BonaNova",
-                      letterSpacing: "0.1em",
-                      transitionDelay: `${delay}ms`,
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
+        <div className="px-8 sm:px-[9rem] pt-[2vw] sm:pt-[2vw] flex flex-col gap-5 sm:gap-5">
+          {menuItems.map((item, index) => {
+            const delay = index * 80;
+            const isActive = activeMenuItem === item.label;
+            const hasSub = !!subNavItems[item.label];
+            const isSubActive = isActive && isMenuOpen && hasSub;
 
-            {/* Exclusive Access pill at end of nav items */}
-            <div
-              className={`pt-6 transition-all duration-700 ease-[cubic-bezier(.19,1,.22,1)] ${
-                isMenuOpen
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-3"
-              }`}
-              style={{ transitionDelay: `${150 + menuItems.length * 80}ms` }}
-            >
-              <a
-                href="/apply"
-                onClick={handleExclusiveAccessClick}
-                className="inline-flex items-center justify-center rounded-full border border-[#BB924D] px-8 py-1.5 sm:px-11 sm:py-3 text-[10px] sm:text-sm tracking-[0.16em] sm:tracking-[0.2em] uppercase transition-colors duration-500 hover:bg-white/5"
-                style={{
-                  color: "#BB924D",
-                  fontFamily: "BonaNova",
-                  fontWeight: "400",
-                }}
+            return (
+              <div
+                key={item.label}
+                className="relative flex items-start justify-between gap-4 sm:gap-2"
               >
-                EXCLUSIVE&nbsp;ACCESS
-              </a>
-            </div>
-          </div>
+                {/* Left: main nav item */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    if (hasSub) {
+                      e.preventDefault();
+                      setActiveMenuItem((prev) =>
+                        prev === item.label ? null : item.label
+                      );
+                    } else {
+                      handleMenuItemClick(e, item.path);
+                    }
+                  }}
+                  className={`cursor-pointer text-left text-lg sm:text-[3vw] uppercase tracking-[0.18em] transition-all duration-700 ease-[cubic-bezier(.19,1,.22,1)] hover:text-[#EDB161] ${
+                    isMenuOpen
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-3"
+                  } ${isActive ? "" : ""}`}
+                  style={{
+                    width: "auto",
+                    fontWeight: "400",
+                    fontFamily: "BonaNova",
+                    letterSpacing: "0.1em",
+                    transitionDelay: `${delay}ms`,
+                  }}
+                >
+                  {item.label}
+                </button>
 
-          <div className="space-y-4 hidden sm:block">
-            <div className="space-y-3">
-              {subNavItems["Legacy"]?.map((subItem, idx) => {
-                const isActiveSub = activeMenuItem === "Legacy" && isMenuOpen;
-                return (
-                  <a
-                    key={subItem.label}
-                    href={subItem.path}
-                    onClick={(e) => handleMenuItemClick(e, subItem.path)}
-                    className={`block text-xs sm:text-sm tracking-[0.2em] uppercase text-[#EDB161] transition-all duration-[900ms] ease-[cubic-bezier(.19,1,.22,1)] ${
-                      isActiveSub
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-2 pointer-events-none"
-                    }`}
-                    style={{
-                      fontSize: "2vw",
-                      letterSpacing: "0.1em",
-                      fontWeight: "400",
-                      fontFamily: "BonaNova",
-                      transitionDelay: `${220 + idx * 120}ms`,
-                    }}
-                  >
-                    {subItem.label}
-                  </a>
-                );
-              })}
-            </div>
+                {/* Right: sub-nav aligned with LEGACY but not affecting row height */}
+                <div className="hidden sm:block flex-1">
+                  {hasSub && (
+                    <div className="absolute top-0 right-[20vw] flex flex-col space-y-3">
+                      {subNavItems[item.label].map((subItem, idx) => (
+                        <a
+                          key={subItem.label}
+                          href={subItem.path}
+                          onClick={(e) => handleMenuItemClick(e, subItem.path)}
+                          className={`block tracking-[0.2em] uppercase text-[#EDB161] transition-all duration-[900ms] ease-[cubic-bezier(.19,1,.22,1)] ${
+                            isSubActive
+                              ? "opacity-100 translate-y-0"
+                              : "opacity-0 translate-y-2 pointer-events-none"
+                          }`}
+                          style={{
+                            fontSize: "2vw",
+                            letterSpacing: "0.1em",
+                            fontWeight: "400",
+                            fontFamily: "BonaNova",
+                            transitionDelay: `${220 + idx * 120}ms`,
+                          }}
+                        >
+                          {subItem.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Exclusive Access pill at end of nav items */}
+          <div
+            className={`pt-6 transition-all duration-700 ease-[cubic-bezier(.19,1,.22,1)] ${
+              isMenuOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-3"
+            }`}
+            style={{ transitionDelay: `${150 + menuItems.length * 80}ms` }}
+          >
+            <a
+              href="/apply"
+              onClick={handleExclusiveAccessClick}
+              className="inline-flex items-center justify-center rounded-full border border-[#BB924D] px-8 py-1.5 sm:px-11 sm:py-3 text-[10px] sm:text-sm tracking-[0.16em] sm:tracking-[0.2em] uppercase transition-colors duration-500 hover:bg-white/5"
+              style={{
+                color: "#BB924D",
+                fontFamily: "BonaNova",
+                fontWeight: "400",
+              }}
+            >
+              EXCLUSIVE&nbsp;ACCESS
+            </a>
           </div>
         </div>
       </div>
