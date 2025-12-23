@@ -181,7 +181,7 @@ const Retail = () => {
       </div>
 
       {/* Section 2: ENABLING A PROACTIVE & ENTERPRISING */}
-      <div className="w-full h-[100vh] sm:h-[100vh] bg-white pt-10 pb-10 sm:pt-[auto] sm:pb-[auto] px-8 sm:px-[10rem] flex flex-col justify-center items-center">
+      <div className="w-full h-[100vh] sm:h-[100vh] bg-white pt-10 pb-10 sm:pt-[14] sm:pb-[14] px-8 sm:px-[10rem] flex flex-col justify-center items-center">
         <motion.div
           className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-12"
           initial={{ opacity: 0, y: 50 }}
@@ -201,7 +201,7 @@ const Retail = () => {
             LUXURY RETAIL AT REGALIUM
           </h2>
 
-          <div className="w-full h-[300px] sm:h-[600px] relative overflow-hidden">
+          <div className="w-full h-[300px] sm:h-[500px] relative overflow-hidden">
             <div
               className="w-full h-full "
               style={{
