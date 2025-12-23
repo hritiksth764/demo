@@ -342,12 +342,10 @@ const Home = () => {
         .padStart(2, "0");
       el.innerHTML = `
         <div class="minimap-item-info-row">
-          <p>${num}</p>
           <p>${data.title}</p>
         </div>
         <div class="minimap-item-info-row">
           <p>${data.metadata}</p>
-          <p>2024</p>
         </div>
       `;
       if (titleLayerRef.current) {
@@ -389,7 +387,7 @@ const Home = () => {
         overflow: hidden;
       `;
       el.innerHTML = `
-        <p style="font-family: BonaNova; font-size: clamp(0.875rem, 1.125vw, 1.125rem); line-height: 1.75; max-width: 100%; color: #333333; letter-spacing: 0.01em; margin: 0; text-align: ${
+        <p style="font-family: BonaNova; font-size: clamp(0.875rem, 1.125vw, 1.125rem); line-height: 1.75; max-width: 100%; color: #5C5857; letter-spacing: 0.01em; margin: 0;  ${
           mobile ? "left" : "right"
         }; text-transform: none; font-weight: 400; word-wrap: break-word; overflow-wrap: break-word;">
           ${data.description}
@@ -1218,7 +1216,9 @@ const Home = () => {
       <div
         ref={interactiveSectionRef}
         className="parallax-section-container hidden sm:block"
-        style={{ background: "#ECE8DC" }}
+        style={{
+          background: "#ECE8DC",
+        }}
       >
         {/* Background Layer - Parallax Images (project class) */}
         {/* project-list container like in reference */}
