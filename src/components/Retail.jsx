@@ -181,9 +181,9 @@ const Retail = () => {
       </div>
 
       {/* Section 2: ENABLING A PROACTIVE & ENTERPRISING */}
-      <div className="w-full h-[100vh] sm:h-[100vh] bg-white pt-10 pb-10 sm:pt-[20] sm:pb-[20] px-8 sm:px-[10rem] flex flex-col justify-center items-center">
+      <div className="w-full h-[100vh] sm:h-[auto] bg-white px-8 sm:px-[10rem] flex flex-col pt-[4vw] pb-[4vw] justify-start items-center">
         <motion.div
-          className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-12"
+          className="w-full max-w-6xl"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -416,7 +416,7 @@ const Retail = () => {
 
       {/* Section 5: Plug & Play at The Boulevard */}
       <div
-        className="w-full min-h-[100vh] sm:h-[100vh] pt-14 sm:pt-24 pb-14 sm:pb-24 px-8 sm:px-[10rem] flex items-center"
+        className="w-full min-h-[100vh] sm:h-[100vh] pt-14 sm:pt-24 pb-14 sm:pb-24 px-8 sm:px-[10rem] flex flex-col justify-center items-center"
         style={{ background: "#ECE8DC" }}
       >
         <motion.div
