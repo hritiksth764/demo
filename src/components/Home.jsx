@@ -549,10 +549,15 @@ const Home = () => {
     });
   };
 
-  // Initialize parallax scrolling with ScrollTrigger
+  // Initialize parallax scrolling with ScrollTrigger (desktop only)
   useEffect(() => {
     const container = interactiveSectionRef.current;
     if (!container) return;
+
+    // Skip the interactive parallax section entirely on mobile.
+    if (isMobile()) {
+      return;
+    }
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -607,8 +612,9 @@ const Home = () => {
       updateMinimapHeight();
     });
 
-    // Handle window resize
+    // Handle window resize (desktop only)
     const handleResize = () => {
+      if (isMobile()) return;
       state.sectionHeight = window.innerHeight;
       updateMinimapHeight();
       ScrollTrigger.refresh();
@@ -628,8 +634,8 @@ const Home = () => {
       // Clamp targetY to valid range
       state.targetY = Math.max(minY, Math.min(maxY, state.targetY));
 
+      // Desktop: keep snap / lerp behavior
       if (!isMobile()) {
-        // Desktop: keep snap / lerp behavior
         if (
           isPinned &&
           !state.isSnapping &&
@@ -650,7 +656,7 @@ const Home = () => {
           state.currentY = Math.max(minY, Math.min(maxY, state.currentY));
         }
       } else {
-        // Mobile: targetY is driven directly by ScrollTrigger (simple scrub)
+        // Mobile: simple follow-scroll: let ScrollTrigger or native scroll drive currentY
         state.currentY = Math.max(minY, Math.min(maxY, state.targetY));
       }
 
@@ -761,25 +767,36 @@ const Home = () => {
       state.isDragging = false;
     };
 
-    // Create ScrollTrigger to pin section (only for pinning, not scrubbing)
-    // End point: Reduced to allow easier exit from last slide
-    // We use (sectionCount - 1) * 80% to give enough space for slides but allow exit
+    // Create ScrollTrigger
     const scrollTrigger = ScrollTrigger.create({
       trigger: container,
       start: "top top",
-      end: `+=${(sectionCount - 1) * 80}%`, // Reduced from 100% to 80% for easier exit
-      pin: true,
-      anticipatePin: 1,
+      end: `+=${(sectionCount - 1) * 80}%`,
+      pin: !isMobile(), // ✅ only pin on desktop
+      scrub: isMobile() ? 0.8 : false, // ✅ simple scrub on mobile, no snap
+      onUpdate: (self) => {
+        if (isMobile()) {
+          const minY = -(sectionCount - 1) * state.sectionHeight;
+          const maxY = 0;
+          const t = -minY * self.progress;
+          state.targetY = -t;
+          state.currentY = Math.max(minY, Math.min(maxY, -t));
+          syncElements();
+          updatePositions();
+        }
+      },
       onEnter: () => {
-        isPinned = true;
-        window.addEventListener("wheel", handleWheel, { passive: false });
-        window.addEventListener("touchstart", handleTouchStart, {
-          passive: false,
-        });
-        window.addEventListener("touchmove", handleTouchMove, {
-          passive: false,
-        });
-        window.addEventListener("touchend", handleTouchEnd);
+        if (!isMobile()) {
+          isPinned = true;
+          window.addEventListener("wheel", handleWheel, { passive: false });
+          window.addEventListener("touchstart", handleTouchStart, {
+            passive: false,
+          });
+          window.addEventListener("touchmove", handleTouchMove, {
+            passive: false,
+          });
+          window.addEventListener("touchend", handleTouchEnd);
+        }
       },
       onLeave: () => {
         isPinned = false;
@@ -789,15 +806,17 @@ const Home = () => {
         window.removeEventListener("touchend", handleTouchEnd);
       },
       onEnterBack: () => {
-        isPinned = true;
-        window.addEventListener("wheel", handleWheel, { passive: false });
-        window.addEventListener("touchstart", handleTouchStart, {
-          passive: false,
-        });
-        window.addEventListener("touchmove", handleTouchMove, {
-          passive: false,
-        });
-        window.addEventListener("touchend", handleTouchEnd);
+        if (!isMobile()) {
+          isPinned = true;
+          window.addEventListener("wheel", handleWheel, { passive: false });
+          window.addEventListener("touchstart", handleTouchStart, {
+            passive: false,
+          });
+          window.addEventListener("touchmove", handleTouchMove, {
+            passive: false,
+          });
+          window.addEventListener("touchend", handleTouchEnd);
+        }
       },
       onLeaveBack: () => {
         isPinned = false;
@@ -1195,10 +1214,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Section 3: Interactive Scroll Section with Infinite Parallax */}
+      {/* Section 3: Interactive Scroll Section with Infinite Parallax (desktop only) */}
       <div
         ref={interactiveSectionRef}
-        className="parallax-section-container"
+        className="parallax-section-container hidden sm:block"
         style={{ background: "#ECE8DC" }}
       >
         {/* Background Layer - Parallax Images (project class) */}
