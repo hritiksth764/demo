@@ -25,35 +25,31 @@ const About = () => {
     },
     {
       year: "1954",
-      title: "EXPANDING HORIZONS",
+      title: "A NATIONAL RECOGNITION",
       description:
-        "The Machani Group expanded its footprint, building transformative spaces that redefined how communities gather, work, and experience culture.",
-      image:
-        "https://via.placeholder.com/800x600/333333/ffffff?text=Expanding+Horizons",
+        "Shri Machani Somappa — to whom we owe our beginnings — is awarded the Padma Shri in Public Affairs.",
+      image: "src/assets/aboutImages/timeline2.png",
     },
     {
       year: "1960",
-      title: "DESIGN-LED FUTURES",
+      title: "Stumpp, Schuele & Somappa (SSS) Springs founded",
       description:
-        "A renewed focus on Indo-luxury and precision-led design brought together global sensibilities and local craftsmanship in bold new ways.",
-      image:
-        "https://via.placeholder.com/800x600/555555/ffffff?text=Design+Led+Futures",
+        "Established as a joint venture to manufacture precision springs — later becoming India's leading spring manufacturer and a manufacturing anchor for the Group.",
+      image: "src/assets/aboutImages/timeline3.png",
     },
     {
       year: "2014",
-      title: "THE URBAN CANVAS",
+      title: "The Birth of Svasa Homes",
       description:
-        "Regalium emerges as a layered, living canvas—where retail, workspaces, and cultural programs intersect to create a new kind of city centre.",
-      image:
-        "https://via.placeholder.com/800x600/777777/ffffff?text=Urban+Canvas",
+        "The Svasa Homes residential project opened on ancestral Basavanagudi land; the project delivered luxury heritage residences and anchors the group's real-estate presence, as well as the Svasa Life philosophy.",
+      image: "src/assets/aboutImages/timeline4.png",
     },
     {
       year: "2026",
-      title: "A CONTINUUM OF GROWTH",
+      title: "Our Biggest Milestone, Regalium",
       description:
-        "Looking ahead, every intervention is imagined as part of a continuum—sustainable, future-first, and deeply rooted in heritage.",
-      image:
-        "https://via.placeholder.com/800x600/999999/ffffff?text=Continuum+of+Growth",
+        "With several other group companies — across robotics, AI, automotive, design, and more — in play, we present our vision for the future, and a destination to redefine how we live and grow.",
+      image: "src/assets/aboutImages/timeline5.png",
     },
   ];
 
@@ -179,10 +175,10 @@ const About = () => {
       </div>
 
       {/* Section 2: Heritage Section */}
-      <div className="w-full h-[100vh] bg-white py-8 sm:py-15 px-8 sm:px-[10rem] flex flex-col justify-between">
+      <div className="w-full h-[auto] bg-white pt-8 sm:pt-15 pb-8 sm:pb-15 px-8 sm:px-[10rem] flex flex-col justify-between">
         {/* Section Title */}
         <motion.h2
-          className="text-[5vw] sm:text-[4vw] font-bold text-left mb-0 sm:mb-0"
+          className="text-base sm:text-[3.5vw] font-bold text-left mb-0 sm:mb-[2vw]"
           style={{
             fontFamily: "BonaNova",
             textTransform: "uppercase",
@@ -211,19 +207,19 @@ const About = () => {
               transition={{ duration: 0.5 }}
             >
               <h3
-                className="text-2xl sm:text-3xl font-semibold mb-0 -mt-10"
+                className="text-2xl sm:text-[1vw] mb-[0.2vw] "
                 style={{
                   fontFamily: '"ChivoMono", serif',
                   fontWeight: "400",
                   textTransform: "uppercase",
                   color: "#BB924D",
-                  letterSpacing: "0.02em",
+                  letterSpacing: "0.01em",
                 }}
               >
                 {activeItem.title}
               </h3>
               <p
-                className="text-[16px] sm:text-[1.2vw] leading-relaxed mb-0 mt-0 w-[80%]"
+                className="text-[16px] sm:text-[1.1vw] mb-0 mt-0 w-[80%]"
                 style={{
                   fontFamily: "BonaNova",
                   fontWeight: "400",
@@ -246,7 +242,7 @@ const About = () => {
               transition={{ duration: 0.5 }}
             >
               <div
-                className="w-full h-full grayscale"
+                className="w-full h-full"
                 style={{
                   backgroundImage: `url(${activeItem.image})`,
                   backgroundSize: "cover",
@@ -259,7 +255,7 @@ const About = () => {
 
         {/* Timeline Component */}
         <motion.div
-          className="w-full mt-0 sm:mt-0 sm:mb-10"
+          className="w-full mt-0 sm:mt-[2vw] sm:mb-10"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -275,13 +271,13 @@ const About = () => {
               >
                 {/* Year */}
                 <motion.span
-                  className="text-sm sm:text-2xl font-semibold"
+                  className="text-sm sm:text-[1.75vw]"
                   style={{
-                    fontFamily: "chivo-mono",
+                    fontFamily: "BonaNova",
                     fontWeight: "400",
                   }}
                   animate={{
-                    color: activeIndex === index ? "#BB924D" : "#D9B57A",
+                    color: activeIndex === index ? "#BB924D" : "#EDECED",
                   }}
                   transition={{
                     duration: 0.3,
@@ -295,7 +291,7 @@ const About = () => {
                 </motion.span>
                 {/* Underline for active years */}
                 <motion.div
-                  className="w-12 sm:w-20 h-1 bg-[#EDB161] mt-2 origin-center"
+                  className="w-12 sm:w-20 h-1 bg-[#BB924D] mt-2 origin-center"
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{
                     scaleX: activeIndex === index ? 1 : 0,
