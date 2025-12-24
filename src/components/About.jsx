@@ -9,6 +9,7 @@ import { Power4 } from "gsap/all";
 import heroImage from "../assets/aboutImages/Hero.png";
 import accordionImage1 from "../assets/aboutImages/accordion1.png";
 import accordionImage2 from "../assets/aboutImages/accordion2.png"; // Using same image for now, replace when you have accordion2.png
+import sliderImage1 from "../assets/aboutImages/imageslider1.png";
 
 const About = () => {
   const containerRef = useRef(null);
@@ -369,7 +370,80 @@ const About = () => {
         </div>
       </div>
 
-      {/* Section 4: Modern Accordion Section */}
+      <div className="w-full h-[100vh] bg-white pt-20 pb-10 sm:pt-20 sm:pb-20 px-8 sm:px-[10rem]">
+        <div className="w-full max-w-7xl mx-auto space-y-6 sm:space-y-0 flex flex-col items-center">
+          {/* Title */}
+          <motion.h2
+            className="text-base sm:text-[3vw] text-center"
+            style={{
+              fontFamily: "BonaNova",
+              textTransform: "uppercase",
+              fontWeight: "400",
+              color: "#0211A2",
+              letterSpacing: "0.02em",
+            }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            SHAPING INDIA'S FUTURE — <br /> ACROSS DOMAINS
+          </motion.h2>
+
+          {/* Paragraph */}
+          <motion.p
+            className="text-[16px] sm:text-[1.2vw] sm:w-[60%] text-center mx-auto"
+            style={{
+              fontFamily: "BonaNova",
+              fontWeight: "400",
+              color: "#5C5857",
+              letterSpacing: "0.02em",
+              lineHeight: "1.6",
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            A leadership that is equal parts foresight and philosophy —
+            championing ideas that nurture the industries of tomorrow, and carry
+            forward a legacy rooted in responsibility, imagination, and
+            transformative ambition.
+          </motion.p>
+
+          {/* Horizontal Image Slider */}
+          <motion.div
+            className="w-full mt-12 sm:mt-10 flex justify-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <div className="overflow-x-auto scrollbar-hide w-full">
+              <div
+                className="flex gap-6 sm:gap-8"
+                style={{ width: "max-content", margin: "0 auto" }}
+              >
+                {/* Slider Items - Landscape images */}
+                {[sliderImage1, sliderImage1, sliderImage1, sliderImage1].map(
+                  (image, index) => (
+                    <div
+                      key={index}
+                      className="flex-shrink-0 w-[500px] sm:w-[600px] h-[300px] sm:h-[400px] bg-gray-200 overflow-hidden"
+                      style={{
+                        backgroundImage: `url(${image})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    />
+                  )
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
       <div className="w-full bg-[#181818] text-white">
         {accordionItems.map((item, index) => {
           const isOpen = accordionIndex === index;
@@ -382,7 +456,7 @@ const About = () => {
               }
               initial={false}
               animate={{
-                height: isOpen ? 380 : 140,
+                height: isOpen ? 380 : 200,
               }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
@@ -411,11 +485,12 @@ const About = () => {
                   {item.date}
                 </p>
                 <h3
-                  className="text-2xl sm:text-3xl lg:text-[2.3vw] font-semibold leading-tight mb-3 sm:mb-4"
+                  className="text-2xl sm:text-[3.0vw] mb-3 sm:mb-4 w-[65vw]"
                   style={{
-                    fontFamily: '"BonaNova", serif',
+                    fontFamily: "BonaNova",
                     textTransform: "uppercase",
-                    letterSpacing: "0.04em",
+                    letterSpacing: "0.03em",
+                    fontWeight: "400",
                   }}
                 >
                   {item.title}
@@ -446,11 +521,11 @@ const About = () => {
       </div>
 
       <div
-        className="w-full h-[100vh] py-20 sm:py-32 px-8 sm:px-[10rem] flex items-center justify-center"
+        className="w-full h-[100vh] py-20 sm:py-24 px-8 sm:px-[10rem] flex items-center justify-center"
         style={{ background: "white" }}
       >
         <motion.div
-          className="w-full max-w-4xl mx-auto text-center space-y-8 sm:space-y-12"
+          className="w-full max-w-4xl mx-auto text-center space-y-8 sm:space-y-04"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -465,16 +540,17 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             style={{
               fontFamily: "ChivoMono",
-              color: "#010F1A",
-              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#BB924D",
+              letterSpacing: "0.03em",
             }}
           >
-            A GLIMPSE INTO THE INSPIRED WORLD
+            A LEGACY SHAPED BY INTENT
           </motion.h3>
 
           {/* Main Heading */}
           <motion.h1
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-[2.5vw] font-bold uppercase leading-tight"
+            className="text-4xl sm:text-[3.0vw] font-bold uppercase leading-tight"
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -483,36 +559,38 @@ const About = () => {
               fontFamily: '"BonaNova", serif',
               color: "#0211A2",
               letterSpacing: "0.02em",
-              lineHeight: "1.2",
+              textTransform: "uppercase",
+              fontWeight: "400",
             }}
           >
-            GROWTH EXPRESSED IN PRECISION,
-            <br /> CLARITY, AND ENCODED BEAUTY
+            ENDURING GROWTH, CRAFTED <br /> WITH PRECISION
           </motion.h1>
 
           {/* Paragraph Text */}
           <motion.p
-            className="text-[16px] sm:text-[1.2vw] leading-relaxed max-w-3xl mx-auto mt-8 sm:mt-12"
+            className="text-[16px] sm:text-[1.2vw] leading-relaxed  mx-auto mt-8 sm:mt-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.6 }}
             style={{
               fontFamily: "BonaNova",
-              color: "#333333",
+              color: "#5C5857",
+
               letterSpacing: "0.02em",
             }}
           >
-            At Regalium, every element becomes a fractal unit aligned to a
-            larger intention: creating a future we wish to live in. Growth is no
-            longer only upward or cyclical, but outward, expansive, and
-            multiplicative, mirroring the evolution of cities, communities, and
-            shared visions.
+            At Machani Group, growth has always been purposeful — built through
+            decades of thoughtful enterprise, integrity, and
+            institution-building. Every space, decision, and detail reflects a
+            commitment to creating value that endures. Growth here is cumulative
+            and generational, shaped by vision, discipline, and an unwavering
+            belief in progress that serves both people and the future.
           </motion.p>
 
           {/* Learn More Button */}
           <motion.div
-            className="flex justify-center mt-10 sm:mt-12"
+            className="flex justify-center mt-10 sm:mt-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -520,16 +598,17 @@ const About = () => {
           >
             <a
               href=""
-              className="inline-block text-sm sm:text-base px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-center transition-all font-medium"
+              className="inline-block text-[16px] sm:text-[1.0vw] px-8 py-3 sm:px-10 sm:py-4 rounded-full border text-center transition-all font-medium"
               style={{
                 fontFamily: "BonaNova",
-                color: "#010F1A",
-                borderColor: "#EDB161",
+                letterSpacing: "0.1em",
+                color: "#BB924D",
+                borderColor: "#BB924D",
                 borderWidth: "1px",
-                backgroundColor: "transparent",
+                textTransform: "uppercase",
               }}
             >
-              Virtual Walkthrough
+              JOIN US ON THE JOURNEY
             </a>
           </motion.div>
         </motion.div>
