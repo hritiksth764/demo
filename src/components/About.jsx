@@ -10,6 +10,11 @@ import heroImage from "../assets/aboutImages/Hero.png";
 import accordionImage1 from "../assets/aboutImages/accordion1.png";
 import accordionImage2 from "../assets/aboutImages/accordion2.png"; // Using same image for now, replace when you have accordion2.png
 import sliderImage1 from "../assets/aboutImages/imageslider1.png";
+import timelineImage1 from "../assets/aboutImages/timeline1.png";
+import timelineImage2 from "../assets/aboutImages/timeline2.png";
+import timelineImage3 from "../assets/aboutImages/timeline3.png";
+import timelineImage4 from "../assets/aboutImages/timeline4.png";
+import timelineImage5 from "../assets/aboutImages/timeline5.png";
 
 const About = () => {
   const containerRef = useRef(null);
@@ -22,35 +27,35 @@ const About = () => {
       title: "Our Beginnings",
       description:
         "Recognised as the start of the Machani family enterprise — the roots that later grew transport, cooperative, manufacturing and social impact ventures across the 20th century.",
-      image: "/src/assets/aboutImages/timeline1.png",
+      image: timelineImage1,
     },
     {
       year: "1954",
       title: "A NATIONAL RECOGNITION",
       description:
         "Shri Machani Somappa — to whom we owe our beginnings — is awarded the Padma Shri in Public Affairs.",
-      image: "src/assets/aboutImages/timeline2.png",
+      image: timelineImage2,
     },
     {
       year: "1960",
       title: "Stumpp, Schuele & Somappa (SSS) Springs founded",
       description:
         "Established as a joint venture to manufacture precision springs — later becoming India's leading spring manufacturer and a manufacturing anchor for the Group.",
-      image: "src/assets/aboutImages/timeline3.png",
+      image: timelineImage3,
     },
     {
       year: "2014",
       title: "The Birth of Svasa Homes",
       description:
         "The Svasa Homes residential project opened on ancestral Basavanagudi land; the project delivered luxury heritage residences and anchors the group's real-estate presence, as well as the Svasa Life philosophy.",
-      image: "src/assets/aboutImages/timeline4.png",
+      image: timelineImage4,
     },
     {
       year: "2026",
       title: "Our Biggest Milestone, Regalium",
       description:
         "With several other group companies — across robotics, AI, automotive, design, and more — in play, we present our vision for the future, and a destination to redefine how we live and grow.",
-      image: "src/assets/aboutImages/timeline5.png",
+      image: timelineImage5,
     },
   ];
 
