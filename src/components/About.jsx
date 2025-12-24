@@ -456,7 +456,7 @@ const About = () => {
               }
               initial={false}
               animate={{
-                height: isOpen ? 380 : 200,
+                height: isOpen ? 380 : 250,
               }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
