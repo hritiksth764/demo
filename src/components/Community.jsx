@@ -283,20 +283,18 @@ const Community = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
             >
               <p
-                className="text-sm sm:text-base lg:text-lg leading-relaxed"
+                className="text-sm sm:text-[1.2vw]"
                 style={{
                   fontFamily: "BonaNova",
-                  color: "#666666",
+                  color: "#5C5857",
                   letterSpacing: "0.02em",
                 }}
               >
-                We prioritise the presentation of our culture at the forefront.
-                Owing to the diversity of elements in art and architecture
-                across South India, there existed vast inspiration for
-                Regalium's structure and design. We prioritise the presentation
-                of our culture at the forefront. Owing to the diversity of
-                elements in art and architecture across South India, there
-                existed vast inspiration for Regalium's structure and design.
+                A landmark gathering that brings global exponential thinkers
+                into India's new centre of innovation. The Summit convenes
+                visionaries from SU's global network — spanning AI, longevity,
+                climate innovation, robotics, and transformative technologies —
+                with India's sharpest leaders, policymakers, and founders.
               </p>
             </motion.div>
           </div>
@@ -304,22 +302,23 @@ const Community = () => {
       </div>
       {/* Section 3: Explore Our Programming */}
       <div
-        className="w-full py-16 sm:py-24 px-8 sm:px-[10rem]"
+        className="w-full  sm:h-[auto] sm:pt-20 pb-10 sm:pb-20 px-8 sm:px-[10rem]"
         style={{ background: "#ECE8DC" }}
       >
         {/* Header with Title and Navigation */}
-        <div className="mb-12 sm:mb-16">
+        <div className="mb-12 sm:mb-12">
           <motion.h2
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5vw] font-bold mb-6 sm:mb-8"
+            className="text-[16px] sm:text-[3vw] mb-6 sm:mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             style={{
-              fontFamily: '"BonaNova", serif',
+              fontFamily: "BonaNova",
               color: "#0211A2",
               fontWeight: "400",
               letterSpacing: "0.02em",
+              textTransform: "uppercase",
             }}
           >
             EXPLORE OUR PROGRAMMING
@@ -345,7 +344,8 @@ const Community = () => {
                   whileTap={{ scale: 0.95 }}
                   style={{
                     fontFamily: "ChivoMono",
-                    letterSpacing: "0.05em",
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
                   }}
                 >
                   {filter}
@@ -360,7 +360,7 @@ const Community = () => {
           {[1, 2, 3].map((item, index) => (
             <motion.div
               key={index}
-              className="bg-white rounded-lg overflow-hidden shadow-sm"
+              className="bg-white  overflow-hidden shadow-sm"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -421,7 +421,7 @@ const Community = () => {
         </div>
       </div>
       {/* Section 5: Discerning Community of Future Thinkers */}
-      <div className="w-full h-[100vh] bg-white py-16 sm:py-24 px-8 sm:px-[10rem]">
+      <div className="w-full h-[auto] bg-white sm:pt-20 pb-10 sm:pb-10 px-8 sm:px-[10rem]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-start">
           {/* Left Column - Large Speaker Image + Text + Button */}
           <motion.div
@@ -443,17 +443,18 @@ const Community = () => {
             </div>
 
             <p
-              className="text-sm sm:text-base leading-relaxed"
+              className="text-sm sm:text-[1.2vw] leading-relaxed"
               style={{
                 fontFamily: "BonaNova",
                 color: "#5C5857",
                 letterSpacing: "0.02em",
               }}
             >
-              A leadership that is equal parts foresight and philosophy —
-              championing ideas that nurture the industries of tomorrow, and
-              carry forward a legacy rooted in responsibility, imagination, and
-              transformative ambition.
+              Our community thrives on diversity of thought and excellence of
+              craft: technologists, cultural leaders, patrons of the arts,
+              entrepreneurs, global families, and generational visionaries.
+              Through every gathering we cultivate a space where generosity of
+              intellect meets the discretion of private membership.
             </p>
 
             <div>
@@ -494,16 +495,16 @@ const Community = () => {
 
             {/* Center Heading */}
             <h3
-              className="text-2xl sm:text-3xl lg:text-[2.2vw] font-bold text-center"
+              className="text-[16px] sm:text-[2.5vw] text-center w-[100%]"
               style={{
-                fontFamily: '"BonaNova", serif',
+                fontFamily: "BonaNova",
                 textTransform: "uppercase",
                 color: "#0211A2",
-                letterSpacing: "0.05em",
+                letterSpacing: "0.02em",
+                fontWeight: "400",
               }}
             >
-              A DISCERNING COMMUNITY OF
-              <br className="hidden sm:block" /> FUTURE THINKERS
+              A DISCERNING COMMUNITY OF FUTURE THINKERS
             </h3>
 
             {/* Bottom Image */}
