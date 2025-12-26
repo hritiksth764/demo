@@ -462,13 +462,14 @@ const Community = () => {
                 className="px-8 py-3 sm:px-10 sm:py-3 rounded-full border text-sm sm:text-base font-medium transition-all mb-8"
                 style={{
                   fontFamily: "BonaNova",
-                  color: "#010F1A",
-                  borderColor: "#EDB161",
+                  color: "#BB924D",
+                  borderColor: "#BB924D",
                   borderWidth: "1px",
                   backgroundColor: "transparent",
+                  letterSpacing: "0.02em",
                 }}
               >
-                LEARN MORE
+                JOIN THE CULTURALLY CURIOUS
               </button>
             </div>
           </motion.div>
